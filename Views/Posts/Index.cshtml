@@ -1,0 +1,63 @@
+﻿@using CEBlog.Services
+@using CEBlog.Models
+
+@inject IImageService imageService
+@model IEnumerable<CEBlog.Models.Post>
+
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_LayoutForAdmin.cshtml";
+}
+
+<div class="d-flex justify-content-start align-items-center">
+	<h1>Posts</h1>
+	<a class="btn btn-sm btn-secondary fw-bold mx-2" asp-action="Create" role="button">Add New</a>
+</div>
+
+<div class="table-responsive-md">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.Title)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Author)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Updated)
+				</th>
+
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Title)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Author.FullName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Updated)
+					</td>
+					<td>
+						<div class="dropdown dropend">
+							<button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false" style="border:none;">
+								<i class="fa-solid fa-ellipsis"></i>
+							</button>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pencil"></i> Edit</a></li>
+								<li><a class="dropdown-item" asp-action="Details" asp-route-slug="@item.Slug"><i class="fa-solid fa-eye"></i> View</a></li>
+								<li><a class="dropdown-item" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash-can"></i> Trash</a></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
