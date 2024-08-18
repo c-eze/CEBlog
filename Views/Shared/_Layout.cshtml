@@ -1,41 +1,225 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
 
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<meta name="description" content="" />
-	<meta name="author" content="" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Chikere.dev Blog">
+	<meta name="author" content="Chikere">
+	<title>Chikere.dev Blog</title>
 
-	<title>@ViewData["Title"] - The Blog Project</title>
-
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-	<link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+	<link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.png" />	
+	<link href="~/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="~/css/venobox.min.css" rel="stylesheet" />
+	<link href="~/css/swiper.min.css" rel="stylesheet" />
+	<link href="~/css/main.css" rel="stylesheet" />
 
 	<!-- Font Awesome icons (free version)-->
 	<script src="//use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
-	<!-- Google fonts-->
-	<link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-	<link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
-
 	<!-- Reference Summernote-->
 	<link href="~/css/summernote-bs4.min.css" rel="stylesheet" />
 
-	<!-- Core theme CSS (includes Bootstrap)-->
-	<link href="~/css/styles.css" rel="stylesheet" />
-
-	<link href="~/css/custom.css" rel="stylesheet" />
-
 	<!-- Summernote insert-->
-	<link href="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+	<link href="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet" />
 </head>
 
-<body class="d-flex flex-column">
+<body>
+    <!--[if lt IE 8]>
+           <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+       <![endif]-->
+    <div class="site-preloader">
+        <div class="loader-text" data-text="Vixto">Vixto</div>
+    </div>
+    <!-- /.site-preloader -->
+    <header class="main-header">
+        <div class="top-header">
+            <div class="container">
+                <div class="top-header-inner">
 
-	<!-- Navigation-->
-	<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+                    <div class="top-left">
+                  @*       <div class="ticker-wrap">
+                            <div class="ticker-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+                                    <path d="M420.001-143.082v-276.919H307.694v-439.998H653.46l-73.461 255.768h158.076L420.001-143.082Z" />
+                                </svg>
+                                <span>Trending:</span>
+                            </div>
+                            <div class="ticker-slide-wrap">
+                                <div class="swiper ticker-slider">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <a href="single.html">Former CIA hacker sentenced to 40 years in prison...</a>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <a href="single.html">US approves $4bn sale of armed drones to India...</a>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <a href="single.html">Facebook at 20: Four ways it changed the world...</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> *@
+                    </div>
+
+                    <div class="top-right">
+                        <ul class="top-right-info">
+                            <li>
+                                <a href="mailto:vixto@example.com">vixto@example.com</a>
+                            </li> 
+                        </ul>
+                        <ul class="header-social">
+                            <li>
+                                <a href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                        <path d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" />
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                        <path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z" />
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                        <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                        <path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z" />
+                                    </svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light sticky-top" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <!-- LOGO -->
+                <div class="site-logo">
+                    <a class="navbar-brand" asp-controller="Home" asp-action="Index"><span class="site-title">Chikere</span></a>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="About">About</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                        
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Posts" asp-action="Index">Portal</a>
+                            </li>
+                        }
+
+                        
+                    </ul>
+
+
+                    <partial name="_LoginPartial" />
+
+                    <!--/.header-menu-wrap-->
+                    <div class="menu-right-item">
+                        <button class="menu-search">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14.811 14.811">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" transform="translate(-2.25 -2.25)">
+                                    <circle cx="5.5" cy="5.5" r="5.5" data-name="Ellipse 7" transform="translate(3 3)"></circle>
+                                    <path d="m16 16-3.142-3.142"></path>
+                                </g>
+                            </svg>
+                        </button>
+                        <button class="mobile-menu-action">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <a href="subscribe.html" class="default-btn text-anim" data-text="Subscribe">Subscribe</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- /.top-header -->
+ @*        <div class="bottom-header">
+            <div class="container">
+
+                <div class="main-header-wapper">
+                    <!-- LOGO -->
+                    <div class="site-logo">
+                        <a href="index.html">
+                            <span class="site-title">Chikere</span>
+                        </a>
+                    </div>
+
+                    <div class="main-header-info">
+                        <div class="header-menu-wrap">
+                            <ul class="nav-menu">
+                                <li>
+                                    <a href="index.html">Home</a>
+                                </li>
+                                <li>
+                                    <a href="archive.html">About</a>
+                                </li>
+                                <li>
+                                    <a href="blog-standard.html">Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--/.header-menu-wrap-->
+                        <div class="menu-right-item">
+                            <button class="menu-search">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14.811 14.811">
+                                    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" transform="translate(-2.25 -2.25)">
+                                        <circle cx="5.5" cy="5.5" r="5.5" data-name="Ellipse 7" transform="translate(3 3)"></circle>
+                                        <path d="m16 16-3.142-3.142"></path>
+                                    </g>
+                                </svg>
+                            </button>
+                            <button class="mobile-menu-action">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                            <a href="subscribe.html" class="default-btn text-anim" data-text="Subscribe">Subscribe</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> *@
+        <!-- /.bottom-header -->
+    </header>
+    <!--/.main-header-->
+
+    <!-- Navigation-->
+@* 	<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
 		<div class="container px-4 px-lg-5">
 			<a class="navbar-brand" asp-controller="Home" asp-action="Index">Start Bootstrap</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,10 +243,10 @@
 
 			</div>
 		</div>
-	</nav>
+	</nav> *@
 
 	<!-- Page Header-->
-	<header class="masthead" style="background-image: url(@ViewData["HeaderImage"])">
+@* 	<header class="masthead" style="background-image: url(@ViewData["HeaderImage"])">
 		<div class="container position-relative px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
@@ -84,13 +268,249 @@
 				</div>
 			</div>
 		</div>
-	</header>
+	</header> *@
 
 	<!-- Main Content-->
 	@RenderBody()
 
+    <footer class="footer-section bg-light-red">
+        <div class="container">
+            <div class="row gy-lg-0 gy-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget widget">
+                        <div class="about-widget">
+                            <a href="index.html" class="logo">
+                                <span class="site-title">Vixto</span>
+                            </a>
+                            <p>Author of this blog md elizabeth nichols is a travel enthusiast, writer and street photographer.</p>
+                            <a href="subscribe.html" class="default-btn text-anim" data-text="Subscribe">Subscribe</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-widget widget">
+                        <div class="category-widget">
+                            <h3 class="widget-title">Category</h3>
+                            <ul>
+                                <li>
+                                    <a href="category.html">Travel</a>
+                                </li>
+                                <li>
+                                    <a href="category.html">Photos</a>
+                                </li>
+                                <li>
+                                    <a href="category.html">Lifestyle</a>
+                                </li>
+                                <li>
+                                    <a href="category.html">Fashion</a>
+                                </li>
+                                <li>
+                                    <a href="category.html">Studies</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget widget">
+                        <div class="widget-post-items">
+                            <h3 class="widget-title">Editors Pick</h3>
+                            <div class="widget-post-item img-hover-move">
+                                <div class="widget-post-thumb media">
+                                    <a href="single.html">
+                                        <img src="assets/img/post-1.jpg" alt="thumb">
+                                    </a>
+                                </div>
+                                <div class="widget-post-content">
+                                    <h3>
+                                        <a href="single.html" class="text-hover">Enjoy the best afternoon at Canggu, Indonesia</a>
+                                    </h3>
+                                    <ul class="post-meta">
+                                        <li>
+                                            <a href="category.html">Travel</a>
+                                        </li>
+                                        <li class="sep"></li>
+                                        <li>
+                                            <a href="category.html" class="date">02.08.2024</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="widget-post-item img-hover-move">
+                                <div class="widget-post-thumb media">
+                                    <a href="single.html">
+                                        <img src="assets/img/post-2.jpg" alt="thumb">
+                                    </a>
+                                </div>
+                                <div class="widget-post-content">
+                                    <h3>
+                                        <a href="single.html" class="text-hover">In this Austrian town, extreme sports king</a>
+                                    </h3>
+                                    <ul class="post-meta">
+                                        <li>
+                                            <a href="category.html">Fashion</a>
+                                        </li>
+                                        <li class="sep"></li>
+                                        <li>
+                                            <a href="category.html" class="date">04.07.2024</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget widget">
+                        <div class="contact-widget">
+                            <h3 class="widget-title">Contact Info</h3>
+                            <ul class="contact-info">
+                                <li>
+                                    <span>Address:</span>3770 Hidden meadow drive venturia, ND 58489
+                                </li>
+                                <li>
+                                    <span>Phone:</span>
+                                    <a href="tel:7045550127">(704) 555-0127</a>
+                                </li>
+                                <li>
+                                    <span>Mail Us:</span>
+                                    <a href="#">vixto@example.com</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright-area">
+                <div class="copyright-text">
+                    © <span id="currentYear"></span> Vixto, All Rights Reserved. Design By <a href="https://themeforest.net/user/dynamiclayers/portfolio" target="_blank">DynamicLayers</a>
+                </div>
+                <ul class="footer-social">
+                    <li>Follow:</li>
+                    <li>
+                        <a href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+                                <path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256C0 376 82.7 476.8 194.2 504.5V334.2H141.4V256h52.8V222.3c0-87.1 39.4-127.5 125-127.5c16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1c-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287V510.1C413.8 494.8 512 386.9 512 256h0z" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+                                <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"></path>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.copyright-area-->
+        </div>
+    </footer>
+    <!--/.footer-section-->
+    <div id="scrollup">
+        <button id="scroll-top" class="scroll-to-top">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+                <path d="M450.001-180.001v-485.077L222.154-437.232 180.001-480 480-779.999 779.999-480l-42.153 42.768-227.847-227.846v485.077h-59.998Z" />
+            </svg>
+        </button>
+    </div>
+    <!--scrollup-->
+
+@*     <div class="modal vixto-modal" id="subscribeModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-inner">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="subscribe-card">
+                        <div class="subscribe-heading">
+                            <img class="bell-animation" src="~/img/bell.png" alt="bell">
+                            <h3>Subscribe to Elizabeth Nichols blog</h3>
+                            <p>Join 5000+ people to get notified about elizabeth nichols blog.</p>
+                        </div>
+                        <form action="php/mailchimp-subscribe.php" id="ajax_mc_form" class="subscribe-form">
+                            <div class="mc-fields">
+                                <input id="mc_email" class="form-control" type="email" name="mc_email" placeholder="Your Email" required="">
+                                <button class="default-btn text-anim" data-text="Subscribe Now">Subscribe Now</button>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div id="mc-form-messages" class="alert" role="alert"></div>
+                        </form>
+                        <ul class="post-social-share">
+                            <li class="facebook">
+                                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256C0 376 82.7 476.8 194.2 504.5V334.2H141.4V256h52.8V222.3c0-87.1 39.4-127.5 125-127.5c16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1c-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287V510.1C413.8 494.8 512 386.9 512 256h0z"></path></svg></a>
+                            </li>
+                            <li class="twitter"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path></svg></a></li>
+                            <li class="instagram">
+                                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></svg></a>
+                            </li>
+                            <li class="pinterest">
+                                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" fill="currentColor"><path d="M496 256c0 137-111 248-248 248-25.6 0-50.2-3.9-73.4-11.1 10.1-16.5 25.2-43.5 30.8-65 3-11.6 15.4-59 15.4-59 8.1 15.4 31.7 28.5 56.8 28.5 74.8 0 128.7-68.8 128.7-154.3 0-81.9-66.9-143.2-152.9-143.2-107 0-163.9 71.8-163.9 150.1 0 36.4 19.4 81.7 50.3 96.1 4.7 2.2 7.2 1.2 8.3-3.3 .8-3.4 5-20.3 6.9-28.1 .6-2.5 .3-4.7-1.7-7.1-10.1-12.5-18.3-35.3-18.3-56.6 0-54.7 41.4-107.6 112-107.6 60.9 0 103.6 41.5 103.6 100.9 0 67.1-33.9 113.6-78 113.6-24.3 0-42.6-20.1-36.7-44.8 7-29.5 20.5-61.3 20.5-82.6 0-19-10.2-34.9-31.4-34.9-24.9 0-44.9 25.7-44.9 60.2 0 22 7.4 36.8 7.4 36.8s-24.5 103.8-29 123.2c-5 21.4-3 51.6-.9 71.2C65.4 450.9 0 361.1 0 256 0 119 111 8 248 8s248 111 248 248z"></path></svg></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> *@
+    <!-- Subscribe Modal -->
+
+    <button class="theme-toggle" id="theme-toggle" title="Toggles light & dark" aria-label="auto" aria-live="polite">
+        <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+            <mask class="moon" id="moon-mask">
+                <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                <circle cx="24" cy="10" r="6" fill="black" />
+            </mask>
+            <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
+            <g class="sun-beams" stroke="currentColor">
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </g>
+        </svg>
+    </button>
+    <!-- Switch Button -->
+
+    <!--jQuery Lib-->
+    <script src="~/js/jquary-3.6.0.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/venobox.min.js"></script>
+    <script src="~/js/swiper.min.js"></script>
+    <script src="~/js/smooth-scroll.js"></script>
+    <script src="~/js/mailchimp.js"></script>
+    <script src="~/js/main.js"></script>
+
+    <!-- Summernote -->
+    <script src="~/js/summernote-bs4.min.js"></script>
+
+    <!-- Sweet Alert 2-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Summernote insert-->
+    <script src="//code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
 	<!-- Footer-->
-	<footer class="border-top">
+@* 	<footer class="border-top">
 		<div class="container px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
@@ -128,7 +548,7 @@
 
 	<!-- Bootstrap core JS-->
 	<script src="//cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
+ *@
 	<!-- Summernote -->
 	<script src="~/js/summernote-bs4.min.js"></script>
 
