@@ -908,38 +908,39 @@ body:not(.loaded){
         border-bottom: 1px solid var(--dl-border-color);
     }
 
-    .header-menu-wrap li li > a {
-        font-family: var(--dl-body-font);
-        color: var(--dl-body-color);
-        font-size: 18px;
-        font-weight: 400;
-        text-transform: capitalize;
-        display: block;
-        height: auto;
-        line-height: inherit;
-        line-height: 20px;
-        letter-spacing: -0.2px;
-        width: 100%;
-        -webkit-font-smoothing: antialiased;
-        position: relative;
-    }
+        .header-menu-wrap li li > a {
+            font-family: var(--dl-body-font);
+            color: var(--dl-body-color);
+            font-size: 18px;
+            font-weight: 400;
+            text-transform: capitalize;
+            display: block;
+            height: auto;
+            line-height: inherit;
+            line-height: 20px;
+            letter-spacing: -0.2px;
+            width: 100%;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
 
-    .header-menu-wrap li li > a:before {
-        background-color: var(--dl-body-color);
-        position: absolute;
-        width: 10px;
-        height: 1px;
-        content: "";
-        left: -15px;
-        top: 50%;
-        opacity: 0;
-        transform: translateY(-50%);
-        -webkit-transition: all 0.3s 0s ease-out;
-        -moz-transition: all 0.3s 0s ease-out;
-        -ms-transition: all 0.3s 0s ease-out;
-        -o-transition: all 0.3s 0s ease-out;
-        transition: all 0.3s 0s ease-out;
-    }
+            .header-menu-wrap li li > a:before,
+            .header-menu-wrap li li > i:before {
+                background-color: var(--dl-body-color);
+                position: absolute;
+                width: 10px;
+                height: 1px;
+                content: "";
+                left: -15px;
+                top: 50%;
+                opacity: 0;
+                transform: translateY(-50%);
+                -webkit-transition: all 0.3s 0s ease-out;
+                -moz-transition: all 0.3s 0s ease-out;
+                -ms-transition: all 0.3s 0s ease-out;
+                -o-transition: all 0.3s 0s ease-out;
+                transition: all 0.3s 0s ease-out;
+            }
 
     .header-menu-wrap li li:hover > a {
         color: var(--dl-heading-color);
