@@ -1,14 +1,58 @@
 ﻿@using CEBlog.Models
 @using CEBlog.Services
 @using CEBlog.Enums
-@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Identity
 @using X.PagedList
 @using X.Web.PagedList
 
 @inject UserManager<BlogUser> userManager
 @inject IImageService imageService
 
-@model IPagedList<Blog>
+@model IPagedList<Post>
+
+<div class="blog-list row gy-5">
+	@foreach (var post in Model)
+	{
+		//Is the logged in user the Author of this post??
+		var isAuthor = false;
+		if (User.Identity.IsAuthenticated)
+		{
+			isAuthor = User.IsInRole(BlogRole.GuestAuthor.ToString());
+			isAuthor = isAuthor && (post.AuthorId == userManager.GetUserId(User));
+		}
+
+		<article class="col-lg-12 col-md-6">
+			<div class="post-card horizontal-card img-hover-move">
+				<div class="post-thumb media">
+					<a asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug">
+						<img src="@imageService.DecodeImage(post.ImageData, post.ContentType)" alt="thumb">
+					</a>
+				</div>
+				<div class="post-content">
+					<ul class="post-meta">
+						<li><a href="category.html">@post.Blog.Name</a></li>
+						<li class="sep"></li>
+						<li><a href="category.html" class="date">@post.Created</a></li>
+					</ul>
+					<h3><a href="single.html" class="text-hover">@post.Title</a></h3>
+					<p>@post.Abstract</p>
+					<ul class="post-card-footer">
+						<li><a asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug" class="read-more">Continue Reading</a></li>
+						<li>
+							<a href="#" class="comment">
+								<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+									<path d="M250.001-410.001h459.998v-59.998H250.001v59.998Zm0-120h459.998v-59.998H250.001v59.998Zm0-120h459.998v-59.998H250.001v59.998Zm609.998 531.537L718.461-260.001H172.309q-30.308 0-51.308-21t-21-51.308v-455.382q0-30.308 21-51.308t51.308-21h615.382q30.308 0 51.308 21t21 51.308v669.227ZM172.309-320h571.69L800-264.615v-523.076q0-4.616-3.846-8.463-3.847-3.846-8.463-3.846H172.309q-4.616 0-8.463 3.846-3.846 3.847-3.846 8.463v455.382q0 4.616 3.846 8.463 3.847 3.846 8.463 3.846ZM160-320V-800v480Z"></path>
+								</svg><span>04</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</article>
+	}
+</div>
+
+@* @model IPagedList<Blog>
 
 <div class="row">
 	@foreach (var blog in Model)
@@ -58,28 +102,31 @@
 		</div>					
 	}
 			
-</div>
+</div> *@
 
-<hr />
+<ul class="pagination-wrap">
+	@if (Model.PageNumber != 1)
+	{
+		<li><a asp-action="Index" asp-route-page="@(Model.PageNumber - 1)"><svg xmlns="http://www.w3.org/2000/svg" height="23" viewBox="0 -960 960 960" width="23" fill="currentColor"><path d="M366.924-213.463 100.001-480.385l266.923-266.922 41.768 41.768-194.54 195.155h646.231v59.999H214.537l195.155 195.154-42.768 41.768Z" /></svg></a></li>
+	}
+	
+	@for(int p = 1; p <= Model.PageCount; p++)
+	{
+		if (p == Model.PageNumber)
+		{
+			<li><a asp-action="Index" asp-route-page="@p" class="active">@p</a></li>
+		}
+		else
+		{
+			<li><a asp-action="Index" asp-route-page="@p">@p</a></li>
+		}
+	}
 
-<!-- Add Paging controls here-->
-<div class="row">
-	<div class="col h3">
-		Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-	</div>
-</div>
-
-<!-- Paged List Core -->
-<div class="row"> 
-	<div class="col">
-		@Html.PagedListPager(Model, page => Url.Action("Index", new {page = page}),
-		new PagedListRenderOptions {
-			LiElementClasses = new string[] {"page-item"},
-			PageClasses = new string[] {"page-link"}
-		});
-	</div>
-</div>
-
+	@if (Model.PageNumber != Model.PageCount)
+	{
+		<li><a asp-action="Index" asp-route-page="@(Model.PageNumber + 1)"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="m553.846-253.847-42.153-43.384 152.77-152.77H180.001v-59.998h484.462l-152.77-152.77 42.153-43.384L779.999-480 553.846-253.847Z" /></svg></a></li>
+	}
+</ul>
 
 @section Scripts {
 

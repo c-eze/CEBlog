@@ -6,6 +6,7 @@ using CEBlog.Models;
 using CEBlog.Services;
 using CEBlog.ViewModels;
 using X.PagedList.Extensions;
+using CEBlog.Enums;
 
 namespace CEBlog.Controllers
 {
@@ -27,19 +28,29 @@ namespace CEBlog.Controllers
 		public async Task<IActionResult> Index(int? page)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 5;
+            var pageSize = 7;
+
+			var posts = _context.Posts
+				.Include(p => p.Blog)
+				.Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
+				.OrderByDescending(p => p.Created)
+				.ToPagedList(pageNumber, pageSize);
+
+			ViewData["PageIndex"] = pageNumber;
+			return View(posts);
 
 			//var blogs = _context.Blogs.Where(
 			//    b => b.Posts.Any(p => p.ReadyStatus == Enums.ReadyStatus.ProductionReady))
 			//    .OrderByDescending(b => b.Created)
 			//    .ToPagedList(pageNumber, pageSize);
-			var blogs = _context.Blogs
-                .Include(b => b.Author)
-	            .OrderByDescending(b => b.Created)
-	            .ToPagedList(pageNumber, pageSize);
 
-			return View(blogs);
-        }
+			//var blogs = _context.Blogs
+			//             .Include(b => b.Author)
+			//          .OrderByDescending(b => b.Created)
+			//          .ToPagedList(pageNumber, pageSize);
+
+			//return View(blogs);
+		}
 
 		public IActionResult About()
 		{
