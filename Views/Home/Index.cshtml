@@ -11,6 +11,7 @@
 @model IPagedList<Post>
 
 <div class="blog-list row gy-5">
+	@{int count = 1;}
 	@foreach (var post in Model)
 	{
 		//Is the logged in user the Author of this post??
@@ -32,7 +33,7 @@
 					<ul class="post-meta">
 						<li><a href="category.html">@post.Blog.Name</a></li>
 						<li class="sep"></li>
-						<li><a href="category.html" class="date">@post.Created</a></li>
+						<li><a href="category.html" class="date">@post.Created.ToString("MM.dd.yyyy")</a></li>
 					</ul>
 					<h3><a href="single.html" class="text-hover">@post.Title</a></h3>
 					<p>@post.Abstract</p>
@@ -49,6 +50,27 @@
 				</div>
 			</div>
 		</article>
+
+		if (count == 4)
+		{
+			<div class="col-lg-12">
+				<div class="subscribe-card">
+					<div class="subscribe-heading">
+						<img class="bell-animation" src="~/img/bell.png" alt="bell">
+						<h3>Subscribe to Chikere blog</h3>
+					</div>
+					<form action="php/mailchimp-subscribe.php" id="ajax_mc_form" class="subscribe-form">
+						<div class="mc-fields">
+							<input id="mc_email" class="form-control" type="email" name="mc_email" placeholder="Your Email" required="">
+							<button class="default-btn text-anim" data-text="Subscribe"><span>S</span><span>u</span><span>b</span><span>s</span><span>c</span><span>r</span><span>i</span><span>b</span><span>e</span></button>
+						</div>
+						<div class="clearfix"></div>
+						<div id="mc-form-messages" class="alert" role="alert"></div>
+					</form>
+				</div>
+			</div>
+		}
+		count++;
 	}
 </div>
 

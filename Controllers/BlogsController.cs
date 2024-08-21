@@ -132,6 +132,7 @@ namespace CEBlog.Controllers
                     if (newImage is not null)
                     {
                         newBlog.ImageData = await _imageService.EncodeImageAsync(newImage);
+                        newBlog.ContentType = _imageService.ContentType(newImage);
                     }
 
                     await _context.SaveChangesAsync();

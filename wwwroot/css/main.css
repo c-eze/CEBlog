@@ -3561,19 +3561,30 @@ blockquote p span:before {
     font-weight: 500;
 }
 
+.social-widget li.linkedin a {
+    background: #0077B5;
+    background: linear-gradient(to bottom, #0077B5 0%, #2B4886 100%);
+}
+
+
 .social-widget li.facebook a {
     background: #3A5795;
     background: linear-gradient(to bottom, #3A5795 0%, #2B4886 100%);
 }
 
 .social-widget li.twitter a {
-    background: #1DA1F2;
-    background: linear-gradient(to right, #1DA1F2, #009ffc);
+    background: #000000;
+    background: linear-gradient(to right, #000000, #606060);
 }
 
 .social-widget li.instagram a {
     background: #ee2a7b;
     background: linear-gradient(115deg, #f9ce34, #ee2a7b, #6228d7);
+}
+
+.social-widget li.github a {
+    background: #990099;
+    background: linear-gradient(to right, #990099, #606060);
 }
 
 .social-widget li.youtube a {

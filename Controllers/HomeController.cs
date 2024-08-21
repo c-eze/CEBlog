@@ -36,7 +36,6 @@ namespace CEBlog.Controllers
 				.OrderByDescending(p => p.Created)
 				.ToPagedList(pageNumber, pageSize);
 
-			ViewData["PageIndex"] = pageNumber;
 			return View(posts);
 
 			//var blogs = _context.Blogs.Where(
