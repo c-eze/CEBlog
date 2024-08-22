@@ -57,9 +57,11 @@ namespace CEBlog.Controllers
             ViewData["SearchTerm"] = searchTerm;
 
             var pageNumber = page ?? 1;
-            var pageSize = 5;
+            var pageSize = 6;
 
             var posts = _blogSearchService.Search(searchTerm);
+
+            ViewData["PostsFound"] = posts.Count();
 
             return View(posts.ToPagedList(pageNumber, pageSize));
         }

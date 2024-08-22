@@ -1,6 +1,7 @@
 ﻿using CEBlog.Data;
 using CEBlog.Enums;
 using CEBlog.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CEBlog.Services
 {
@@ -15,7 +16,8 @@ namespace CEBlog.Services
 
         public IQueryable<Post> Search(string searchTerm)
         {
-            var posts = _context.Posts.Where(p => p.ReadyStatus == ReadyStatus.ProductionReady).AsQueryable();
+            var posts = _context.Posts.Include(p => p.Blog)
+                                      .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady).AsQueryable();
 
             if (searchTerm != null)
             {
