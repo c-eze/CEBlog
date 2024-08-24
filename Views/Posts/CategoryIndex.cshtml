@@ -8,24 +8,25 @@
 
 @model IPagedList<Post>
 
-<section class="page-header author-page">
+<section class="page-header">
     <div class="container">
         <div class="page-content-wrap">
-            <div class="page-content mx-auto text-center">
-                <h4>@ViewBag.PostsFound posts found</h4>
-                <h2 class="justify-content-center">Search Result For: @ViewBag.SearchTerm</h2>
-                @* <p>Embark on a journey through the vibrant world of sustainable fashion, where innovation meets ethics and style.</p> *@
+            <div class="page-content">
+                <h4>Category</h4>
+                <h2>@ViewBag.CategoryName<span>@ViewBag.TotalPosts Posts</span></h2>
+                <p>@ViewBag.Description</p>
             </div>
         </div>
     </div>
 </section>
 <!--/.page-header-->
 
-<section class="archive-page padding">
+<section class="category-page padding">
     <div class="container">
-        <div class="row gy-4">
+        <div class="row gy-4"> 
+
             @foreach (var post in Model)
-            {
+            { 
                 <article class="col-lg-4 col-md-6">
                     <div class="post-card img-hover-move">
                         <div class="post-thumb media">
@@ -35,9 +36,9 @@
                         </div>
                         <div class="post-content">
                             <ul class="post-meta">
-                                <li><a href="category.html">@post.Blog.Name</a></li>
+                                <li><a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="@post.Blog.Name">@post.Blog.Name</a></li>
                                 <li class="sep"></li>
-                                <li><a href="category.html" class="date">@post.Created.ToString("MM.dd.yyyy")</a></li>
+                                <li><a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="@post.Blog.Name" class="date">@post.Created.ToString("MM.dd.yyyy")</a></li>
                             </ul>
                             <h3><a asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug" class="text-hover">@post.Title</a></h3>
                             <p>@post.Abstract</p>
@@ -53,18 +54,18 @@
                             </ul>
                         </div>
                     </div>
-                </article> 
-            }
+                </article>
+            }                   
         </div>
 
         <ul class="pagination-wrap justify-content-center">
             @if (Model.PageNumber != 1)
             {
                 <li>
-                    <a asp-action="SearchIndex" asp-route-page="@(Model.PageNumber - 1)" asp-route-searchterm="@ViewBag.SearchTerm">
+                    <a asp-action="CategoryIndex" asp-route-page="@(Model.PageNumber - 1)" asp-route-categoryname="@ViewBag.CategoryName">
                         <svg xmlns="http://www.w3.org/2000/svg" height="23" viewBox="0 -960 960 960" width="23" fill="currentColor"><path d="M366.924-213.463 100.001-480.385l266.923-266.922 41.768 41.768-194.54 195.155h646.231v59.999H214.537l195.155 195.154-42.768 41.768Z" /></svg>
 
-                </a>
+                    </a>
 
                 </li>
             }
@@ -73,19 +74,20 @@
             {
                 if (p == Model.PageNumber)
                 {
-                    <li><a asp-action="SearchIndex" asp-route-page="@p" asp-route-searchterm="@ViewBag.SearchTerm" class="active">@p</a></li>
+                    <li><a asp-action="CategoryIndex" asp-route-page="@p" asp-route-categoryname="@ViewBag.CategoryName" class="active">@p</a></li>
                 }
                 else
                 {
-                    <li><a asp-action="SearchIndex" asp-route-page="@p" asp-route-searchterm="@ViewBag.SearchTerm">@p</a></li>
+                    <li><a asp-action="CategoryIndex" asp-route-page="@p" asp-route-categoryname="@ViewBag.CategoryName">@p</a></li>
                 }
             }
 
             @if (Model.PageNumber != Model.PageCount)
             {
-                <li><a asp-action="SearchIndex" asp-route-page="@(Model.PageNumber + 1)" asp-route-searchterm="@ViewBag.SearchTerm"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="m553.846-253.847-42.153-43.384 152.77-152.77H180.001v-59.998h484.462l-152.77-152.77 42.153-43.384L779.999-480 553.846-253.847Z" /></svg></a></li>
+                <li><a asp-action="CategoryIndex" asp-route-page="@(Model.PageNumber + 1)" asp-route-categoryname="@ViewBag.CategoryName"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="m553.846-253.847-42.153-43.384 152.77-152.77H180.001v-59.998h484.462l-152.77-152.77 42.153-43.384L779.999-480 553.846-253.847Z" /></svg></a></li>
             }
         </ul>
         <!--/.pagination-wrap-->
+
     </div>
 </section>

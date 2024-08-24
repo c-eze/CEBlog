@@ -18,7 +18,7 @@
         @foreach (var blog in Model)
         {
             <li class="img-hover-move">
-                <a href="category.html" class="media">
+                <a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="@blog.Name" class="media">
                     <img src="@imageService.DecodeImage(blog.ImageData, blog.ContentType)" alt="thumb">@blog.Name <span>@blog.Posts.Count()</span>
                 </a>
             </li>

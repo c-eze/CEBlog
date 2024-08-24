@@ -13,6 +13,8 @@ using CEBlog.Enums;
 using CEBlog.ViewModels;
 using X.PagedList.Extensions;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Hosting;
+using MailKit.Search;
 
 namespace CEBlog.Controllers
 {
@@ -51,6 +53,26 @@ namespace CEBlog.Controllers
 
             return View(await posts.ToListAsync());
 		}
+
+        public async Task<IActionResult> CategoryIndex(int? page, string categoryName)
+        {
+            ViewData["CategoryName"] = categoryName;
+
+            var blog = _context.Blogs
+                .Where(b => b.Name.Contains(categoryName))
+                .FirstOrDefault();
+
+            ViewData["Description"] = blog.Description.ToString();
+
+            var pageNumber = page ?? 1;
+            var pageSize = 6;
+
+            var posts = _blogSearchService.CategorySearch(categoryName);
+
+            ViewData["TotalPosts"] = posts.Count();
+
+            return View(posts.ToPagedList(pageNumber, pageSize));
+        }
 
         public async Task<IActionResult> SearchIndex(int? page, string searchTerm)
         {

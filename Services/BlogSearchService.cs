@@ -14,6 +14,22 @@ namespace CEBlog.Services
             _context = context;
         }
 
+        public IQueryable<Post> CategorySearch(string categoryName)
+        {
+            var posts = _context.Posts.Include(p => p.Blog)
+                                      .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady).AsQueryable();
+
+            if (categoryName != null)
+            {
+                categoryName = categoryName.ToLower();
+
+                posts = posts.Where(
+                    p => p.Blog.Name.ToLower().Contains(categoryName));
+            }
+
+            return posts.OrderByDescending(p => p.Created);
+        }
+
         public IQueryable<Post> Search(string searchTerm)
         {
             var posts = _context.Posts.Include(p => p.Blog)
