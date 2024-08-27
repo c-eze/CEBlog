@@ -119,6 +119,7 @@ namespace CEBlog.Controllers
             }
 
             var post = await _context.Posts
+                .Include(p => p.Blog)
                 .Include(p => p.Author)
                 .Include(p => p.Tags)
                 .Include(p => p.Comments)
