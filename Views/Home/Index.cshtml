@@ -30,11 +30,11 @@
 								</div>
 								<div class="post-content">
 									<ul class="post-meta">
-										<li><a href="category.html">@post.Blog.Name</a></li>
+										<li><a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="@post.Blog.Name">@post.Blog.Name</a></li>
 										<li class="sep"></li>
-										<li><a href="category.html" class="date">@post.Created.ToString("MM.dd.yyyy")</a></li>
+										<li><a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="@post.Blog.Name" class="date">@post.Created.ToString("MM.dd.yyyy")</a></li>
 									</ul>
-									<h3><a href="single.html" class="text-hover">@post.Title</a></h3>
+									<h3><a asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug" class="text-hover">@post.Title</a></h3>
 									<p>@post.Abstract</p>
 									<ul class="post-card-footer">
 										<li><a asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug" class="read-more">Continue Reading</a></li>
