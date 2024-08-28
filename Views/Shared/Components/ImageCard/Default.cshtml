@@ -1,0 +1,27 @@
+﻿@using CEBlog.Models
+@using CEBlog.Services
+@using X.PagedList
+@using X.Web.PagedList
+
+@inject IImageService imageService
+
+@model Post
+
+<article class="col-lg-4 col-md-6 position-relative">
+    <div class="post-card image-post img-hover-move">
+        <div class="post-thumb media">
+            <a asp-action="Details" asp-controller="Posts" asp-route-slug="Model.Slug">
+                <img src="@imageService.DecodeImage(Model.ImageData, Model.ContentType)" alt="thumb">
+            </a>
+            <div class="image-post-content">
+                <ul class="post-meta">
+                    <li><a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="Model.Blog.Name">Model.Blog.Name</a></li>
+                    <li class="sep"></li>
+                    <li><a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="Model.Blog.Name" class="date">Model.Created.ToString("MM.dd.yyyy")</a></li>
+                </ul>
+                <h3><a asp-action="Details" asp-controller="Posts" asp-route-slug="Model.Slug" class="text-hover">Model.Title</a></h3>
+                <a asp-action="Details" asp-controller="Posts" asp-route-slug="Model.Slug" class="read-more">Continue Reading</a>
+            </div>
+        </div>
+    </div>
+</article>
