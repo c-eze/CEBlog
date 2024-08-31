@@ -29,11 +29,19 @@
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input type="file" name="newImage" class="form-control" accept=".png,.jpg,.jpeg,.gif" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Abstract" class="control-label"></label>
                 <textarea asp-for="Abstract" class="form-control"></textarea>
                 <span asp-validation-for="Abstract" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
                 <textarea asp-for="Content" class="form-control"></textarea>
@@ -68,18 +76,43 @@
                         <select name="TagValues" id="TagList" multiple></select>
                     </div>
                 </div>
-
             </div>
-
+            <!--./Manage Tags-->
 
             <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input type="file" name="newImage" class="form-control" accept=".png,.jpg,.jpeg,.gif" />
-                <span asp-validation-for="Image" class="text-danger"></span>
+                <div class="row">
+                    <div class="col">
+                        <label class="control-label">Related Articles</label>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col">
+                        <div class="row mb-2">
+                            <div class="col">
+                                <div class="form-group"> 
+                                    <select id="PostTitle" asp-for="Id" class="form-control" asp-items="ViewBag.PostId" size="5" multiple></select>
+                                    <span asp-validation-for="Id" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col d-grid">
+                                <button onclick="AddRelatedPosts()" name="AddPost" type="button" class="btn btn-dark btn-sm">Add Post</button>
+                            </div> 
+                            <div class="col d-grid">
+                                <button onclick="RemoveRelatedPosts()" name="RemovePost" type="button" class="btn btn-dark btn-sm">Remove Post</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col d-grid">
+                        <select name="PostValues" id="PostList" size="4" multiple></select>
+                    </div>
+                </div>
             </div>
+            <!--./Related Articles-->
 
-
-            <div class="form-group">
+            <div class="form-group mb-2">
                 <label asp-for="ReadyStatus" class="control-label"></label>
                 <select asp-for="ReadyStatus" class="form-control" asp-items="Html.GetEnumSelectList<ReadyStatus>()"></select>
                 <span asp-validation-for="ReadyStatus" class="text-danger"></span>
@@ -101,7 +134,8 @@
     <script>
 
         let tagValues = '@ViewData["TagValues"]';
-
+        let postValues = '@ViewData["PostValues"]';
+        
         //Default font size but not for placeholder...
         $('#Content').summernote({
             placeholder: "Post Body"

@@ -263,7 +263,10 @@ namespace CEBlog.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts.Include(p => p.Tags).FirstOrDefaultAsync(p => p.Id == id);
+            var post = await _context.Posts
+                .Include(p => p.Tags)
+                .Include(p => p.RelatedPosts)
+                .FirstOrDefaultAsync(p => p.Id == id);
 
             if (post == null)
             {
@@ -271,7 +274,33 @@ namespace CEBlog.Controllers
             }
 
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Title", post.Id);
             ViewData["TagValues"] = string.Join(",", post.Tags.Select(t => t.Text));
+
+            var relatedIds = post.RelatedPosts.Select(r => r.ArticleId);
+
+            List<Post> postTitles = await _context.Posts
+                .ToListAsync();
+
+            var query = postTitles.GroupJoin(relatedIds,
+                                                post => post.Id,
+                                                related => related,
+                                                (post, related) =>
+                                                new
+                                                {
+                                                    Title = post.Title,
+                                                    Id = related
+                                                })
+                .SelectMany(x => x.Id.DefaultIfEmpty(),
+                            (x, Id) => new
+                            {
+                                x.Title,
+                                Id
+                            })
+                .Where(r => r.Id is not null);
+
+            ViewData["PostValues"] = string.Join(",", query.Select(r => r.Title));
+          
 
             return View(post);
         }
@@ -281,7 +310,7 @@ namespace CEBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus")] Post post, IFormFile? newImage, List<string> tagValues)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus")] Post post, IFormFile? newImage, List<string> tagValues, List<string> postValues)
         {
             if (id != post.Id)
             {
@@ -292,7 +321,10 @@ namespace CEBlog.Controllers
             {
                 try
                 {
-                    var newPost = await _context.Posts.Include(p => p.Tags).FirstOrDefaultAsync(p => p.Id == post.Id);
+                    var newPost = await _context.Posts
+                        .Include(p => p.Tags)
+                        .Include(p => p.RelatedPosts)
+                        .FirstOrDefaultAsync(p => p.Id == post.Id);
 
                     newPost.Updated = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
                     newPost.Title = post.Title;
@@ -334,6 +366,22 @@ namespace CEBlog.Controllers
                             AuthorId = newPost.AuthorId,
                             Text = tagText
                         });
+                    }
+
+                    //Remove all related Posts previously associated with this Post
+                    newPost.RelatedPosts.Clear(); 
+
+                    //Add in the new related Posts from the Edit form
+                    foreach (var postText in postValues)
+                    {
+                        var postArticle = await _context.Posts
+                                .FirstOrDefaultAsync(p => p.Title == postText);
+
+                        var relatedPost = new Related()
+                        {
+                            ArticleId = postArticle.Id 
+                        };
+                        newPost.RelatedPosts.Add(relatedPost);
                     }
 
                     await _context.SaveChangesAsync();
