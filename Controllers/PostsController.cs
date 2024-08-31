@@ -122,6 +122,7 @@ namespace CEBlog.Controllers
                 .Include(p => p.Blog)
                 .Include(p => p.Author)
                 .Include(p => p.Tags)
+                .Include(p => p.RelatedPosts)
                 .Include(p => p.Comments)
                 .ThenInclude(c => c.Author)
                 .Include(p => p.Comments)
@@ -133,12 +134,46 @@ namespace CEBlog.Controllers
                 return NotFound();
             }
 
+            var relatedIds = post.RelatedPosts.Select(r => r.ArticleId);
+
+            List<Post> allPosts = await _context.Posts
+                .Include(p => p.Blog)
+                .Include(p => p.Author)
+                .Include(p => p.Tags)
+                .Include(p => p.RelatedPosts)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.Author)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.Moderator)
+                .ToListAsync();
+
+            var relPosts = allPosts.GroupJoin(relatedIds,
+                                                post => post.Id,
+                                                related => related,
+                                                (post, related) =>
+                                                new
+                                                {
+                                                    Article = post,
+                                                    Id = related
+                                                })
+                .SelectMany(x => x.Id.DefaultIfEmpty(),
+                            (x, Id) => new
+                            {
+                                x,
+                                Id
+                            })
+                .Where(r => r.Id is not null);
+
             var dataVM = new PostDetailViewModel()
             {
                 Post = post,
                 Tags = _context.Tags
                       .Select(t => t.Text.ToLower())
-                      .Distinct().ToList()
+                      .Distinct().ToList(),
+                RelatedPosts = relPosts
+                      .Select(b => b.x)
+                      .Select(a => a.Article)
+                      .ToList()
             };
 
             ViewData["HeaderImage"] = _imageService.DecodeImage(post.ImageData, post.ContentType);
@@ -146,29 +181,7 @@ namespace CEBlog.Controllers
             ViewData["SubText"] = post.Abstract;
 
             return View(dataVM);
-        }
-
-        //public async Task<IActionResult> Details(string slug)
-        //      {
-        //          if (string.IsNullOrEmpty(slug))
-        //          {
-        //              return NotFound();
-        //          }
-
-        //          var post = await _context.Posts
-        //              .Include(p => p.Blog)
-        //              .Include(p => p.Author)
-        //              .Include(p => p.Tags)
-        //              .Include(p => p.Comments)
-        //              .ThenInclude(c => c.Author)
-        //              .FirstOrDefaultAsync(m => m.Slug == slug);
-        //          if (post == null)
-        //          {
-        //              return NotFound();
-        //          }
-
-        //          return View(post);
-        //      }
+        } 
 
         // GET: Posts/Create
         public IActionResult Create()
