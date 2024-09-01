@@ -45,6 +45,9 @@ builder.Services.AddScoped<IImageService, BasicImageService>();
 //Register the Slug Service
 builder.Services.AddScoped<ISlugService, BasicSlugService>();
 
+//Register the Slug Service
+builder.Services.AddScoped<INavigationService, PostNavigationService>();
+
 var app = builder.Build();
 var scope = app.Services.CreateScope();
 

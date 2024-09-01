@@ -6,6 +6,7 @@
 
 @inject IImageService imageService
 @inject UserManager<BlogUser> userManager
+@inject INavigationService navigationService
 
 @model PostDetailViewModel
 
@@ -53,7 +54,6 @@
                         </li>
                     </ul>
                 </footer>
-
                 <!--/.tags & social icons-->
                 @if (Model.RelatedPosts.Count() > 0)
                 {
@@ -97,8 +97,8 @@
 
                 <div class="single-post-item">
                     <ul class="single-post-navigation">
-                        <li><a href="single.html"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M366.924-213.463 100.001-480.385l266.923-266.922 41.768 41.768-194.54 195.155h646.231v59.999H214.537l195.155 195.154-42.768 41.768Z" /></svg>Prev Posts</a></li>
-                        <li><a href="single.html">Next Posts<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="m593.461-213.463-42.768-41.768 195.155-195.154H100.001v-59.999h646.231L551.693-705.539l41.768-41.768 266.922 266.922-266.922 266.922Z" /></svg></a></li>
+                        <li><a asp-action="Details" asp-controller="Posts" asp-route-slug="@navigationService.Previous(Model.Post.Id)"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="M366.924-213.463 100.001-480.385l266.923-266.922 41.768 41.768-194.54 195.155h646.231v59.999H214.537l195.155 195.154-42.768 41.768Z" /></svg>Prev Posts</a></li>
+                        <li><a asp-action="Details" asp-controller="Posts" asp-route-slug="@navigationService.Next(Model.Post.Id)">Next Posts<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="m593.461-213.463-42.768-41.768 195.155-195.154H100.001v-59.999h646.231L551.693-705.539l41.768-41.768 266.922 266.922-266.922 266.922Z" /></svg></a></li>
                     </ul>
                 </div>
                 <!--/.post-navigation-->
