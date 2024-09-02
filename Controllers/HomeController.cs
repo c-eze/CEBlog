@@ -32,6 +32,7 @@ namespace CEBlog.Controllers
 
 			var posts = _context.Posts
 				.Include(p => p.Blog)
+				.Include(p => p.Comments)
 				.Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
 				.OrderByDescending(p => p.Created)
 				.ToPagedList(pageNumber, pageSize);

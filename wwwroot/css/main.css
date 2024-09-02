@@ -456,6 +456,9 @@ body:not(.loaded){
     z-index: 1;
 }
 
+#commentSection {
+    display: grid;
+}
 .default-btn.text-anim:before {
     color: var(--dl-body-color);
 }
@@ -3181,7 +3184,7 @@ blockquote p span:before {
 
 .comment-form-group {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 20px;
 }
 
@@ -3207,7 +3210,7 @@ blockquote p span:before {
 
     .form-field.submit-btn,
     .comment-form-group .form-field.message {
-        grid-column-end: span 2;
+        grid-column-end: span 3;
     }
 
     .comment-form-group .default-btn {

@@ -17,6 +17,7 @@ namespace CEBlog.Services
         public IQueryable<Post> CategorySearch(string categoryName)
         {
             var posts = _context.Posts.Include(p => p.Blog)
+                                      .Include(p => p.Comments)
                                       .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady).AsQueryable();
 
             if (categoryName != null)
