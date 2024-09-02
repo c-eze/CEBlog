@@ -2166,6 +2166,14 @@ body:not(.loaded){
     background-color: #255ca1;
 }
 
+.post-social-share li.linkedin a {
+    background-color: #0077B5;
+}
+
+.post-social-share li.github a {
+    background-color: #990099;
+}
+
 .post-social-share li.twitter a {
     background-color: #000000;
 }
@@ -2178,6 +2186,9 @@ body:not(.loaded){
     background-color: #cb2027;
 }
 
+.post-social-share li.youtube a {
+    background-color: #cb2027;
+}
 
 @media (min-width: 993px) {
     .post-layout-1 .post-layout-item:nth-child(1) {
