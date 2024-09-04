@@ -2,6 +2,7 @@
 using CEBlog.Enums;
 using CEBlog.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace CEBlog.Services
 {
@@ -12,6 +13,41 @@ namespace CEBlog.Services
         public BlogSearchService(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public IQueryable<Post> AuthorSearch(string authorId)
+        {
+            var posts = _context.Posts.Include(p => p.Blog)
+                                      .Include(p => p.Author)
+                                      .Include(p => p.Comments)
+                                      .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady).AsQueryable();
+
+            if (!string.IsNullOrEmpty(authorId))
+            {
+                posts = posts.Where(p => p.Author.Id == authorId);
+            }
+
+            return posts.OrderByDescending(p => p.Created);
+        }
+
+        public IQueryable<Post> TagSearch(string tagName)
+        {
+            var posts = _context.Posts.Include(p => p.Blog)
+                                      .Include(p => p.Comments)
+                                      .Include(p => p.Tags)
+                                      .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady).AsQueryable();
+
+            if (tagName != null)
+            {
+                tagName = tagName.ToLower();
+
+                posts = posts.Where
+                    (
+                        p => p.Tags.Any(t => t.Text.ToLower() == tagName)
+                    );
+            }
+
+            return posts.OrderByDescending(p => p.Created);
         }
 
         public IQueryable<Post> CategorySearch(string categoryName)
@@ -34,6 +70,7 @@ namespace CEBlog.Services
         public IQueryable<Post> Search(string searchTerm)
         {
             var posts = _context.Posts.Include(p => p.Blog)
+                                      .Include(p => p.Comments)
                                       .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady).AsQueryable();
 
             if (searchTerm != null)

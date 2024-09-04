@@ -59,7 +59,7 @@ namespace CEBlog.Data.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Blogs", (string)null);
                 });
 
             modelBuilder.Entity("CEBlog.Models.BlogUser", b =>
@@ -204,7 +204,7 @@ namespace CEBlog.Data.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("CEBlog.Models.Post", b =>
@@ -259,7 +259,7 @@ namespace CEBlog.Data.Migrations
 
                     b.HasIndex("BlogId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("CEBlog.Models.Related", b =>
@@ -270,7 +270,7 @@ namespace CEBlog.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ArticleId")
+                    b.Property<int?>("ArticleId")
                         .HasColumnType("integer");
 
                     b.Property<int>("PostId")
@@ -280,7 +280,7 @@ namespace CEBlog.Data.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Related");
+                    b.ToTable("Relateds", (string)null);
                 });
 
             modelBuilder.Entity("CEBlog.Models.Tag", b =>
@@ -308,7 +308,7 @@ namespace CEBlog.Data.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

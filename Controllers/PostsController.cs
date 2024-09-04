@@ -15,6 +15,7 @@ using X.PagedList.Extensions;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Hosting;
 using MailKit.Search;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CEBlog.Controllers
 {
@@ -53,6 +54,34 @@ namespace CEBlog.Controllers
 
             return View(await posts.ToListAsync());
 		}
+
+        public async Task<IActionResult> AuthorIndex(int? page, string? authorId)
+        {
+            ViewData["AuthorDesc"] = "Meet Chikere, a developer in Alabama who specializes in programming full stack web applications and software in ASP.NET and C#.";
+
+            var pageNumber = page ?? 1;
+            var pageSize = 6;
+
+            var posts = _blogSearchService.AuthorSearch(authorId);
+
+            ViewData["TotalPosts"] = posts.Count();
+
+            return View(posts.ToPagedList(pageNumber, pageSize));
+        }
+
+        public async Task<IActionResult> TagIndex(int? page, string tagName)
+        {
+            ViewData["TagName"] = tagName;
+
+            var pageNumber = page ?? 1;
+            var pageSize = 6;
+
+            var posts = _blogSearchService.TagSearch(tagName);
+
+            ViewData["TotalPosts"] = posts.Count();
+
+            return View(posts.ToPagedList(pageNumber, pageSize));
+        }
 
         public async Task<IActionResult> CategoryIndex(int? page, string categoryName)
         {
@@ -167,9 +196,9 @@ namespace CEBlog.Controllers
             var dataVM = new PostDetailViewModel()
             {
                 Post = post,
-                Tags = _context.Tags
-                      .Select(t => t.Text.ToLower())
-                      .Distinct().ToList(),
+                Tags = post.Tags
+                        .Select(t => t.Text.ToLower())
+                        .ToList(),
                 RelatedPosts = relPosts
                       .Select(b => b.x)
                       .Select(a => a.Article)

@@ -2122,6 +2122,18 @@ body:not(.loaded){
     color: #316FF6;
 }
 
+.social-list li.linkedin a svg {
+    color: #0077B5;
+}
+
+.social-list li.github a svg {
+    color: #990099;
+}
+
+.social-list li.youtube a svg {
+    color: #cb2027;
+}
+
 .social-list li.twitter a svg {
     color: #111;
 }

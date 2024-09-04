@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CEBlog.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240818010952_001")]
+    [Migration("20240904123827_001")]
     partial class _001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -264,6 +264,27 @@ namespace CEBlog.Data.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("CEBlog.Models.Related", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ArticleId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Relateds");
+                });
+
             modelBuilder.Entity("CEBlog.Models.Tag", b =>
                 {
                     b.Property<int>("Id")
@@ -473,6 +494,17 @@ namespace CEBlog.Data.Migrations
                     b.Navigation("Blog");
                 });
 
+            modelBuilder.Entity("CEBlog.Models.Related", b =>
+                {
+                    b.HasOne("CEBlog.Models.Post", "Post")
+                        .WithMany("RelatedPosts")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+                });
+
             modelBuilder.Entity("CEBlog.Models.Tag", b =>
                 {
                     b.HasOne("CEBlog.Models.BlogUser", "Author")
@@ -556,6 +588,8 @@ namespace CEBlog.Data.Migrations
             modelBuilder.Entity("CEBlog.Models.Post", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("RelatedPosts");
 
                     b.Navigation("Tags");
                 });
