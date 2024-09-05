@@ -2202,6 +2202,10 @@ body:not(.loaded){
     background-color: #cb2027;
 }
 
+.post-social-share li.mail a {
+    background-color: #D3D3D3;
+}
+
 @media (min-width: 993px) {
     .post-layout-1 .post-layout-item:nth-child(1) {
         grid-area: 1 / 1 / 2 / 2;
@@ -2638,7 +2642,7 @@ body:not(.loaded){
 /* Subscribe Card */
 .subscribe-card {
     background-color: var(--dl-primary-color);
-    background-image: url(~/img/subscribe-pattern.png);
+    background-image: url(../img/subscribe-pattern.png);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
