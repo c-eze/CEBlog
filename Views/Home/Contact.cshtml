@@ -16,25 +16,25 @@
             </div>
             <div class="col-lg-6">
                 <div class="contact-form">
-                    <form action="php/contact.php" method="post" id="ajax_contact" class="form-horizontal">
+                    <form asp-action="Contact" method="post" id="ajax_contact" class="form-horizontal">
                         <div class="contact-form-group">
                             <div class="form-field">
-                                <input type="text" id="firstname" name="firstname" class="form-control" placeholder="First Name" required="">
+                                <input asp-for="FirstName" type="text" id="firstname" class="form-control" placeholder="First Name" required data-validation-required-message="Please enter your first name.">
                             </div>
                             <div class="form-field">
-                                <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Last Name" required="">
+                                <input asp-for="LastName" type="text" id="lastname" class="form-control" placeholder="Last Name" required data-validation-required-message="Please enter your last name.">
                             </div>
                             <div class="form-field">
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Email" required="">
+                                <input asp-for="Email" type="email" id="email" class="form-control" placeholder="Email" required data-validation-required-message="Please enter your email address.">
                             </div>
                             <div class="form-field">
-                                <input type="text" id="phone" name="phone" class="form-control" placeholder="Phone Number" required="">
+                                <input asp-for="Phone" type="text" id="phone" class="form-control" placeholder="Phone Number" required data-validation-required-message="Please enter your phone number.">
                             </div>
                             <div class="form-field message">
-                                <textarea id="message" name="message" cols="30" rows="4" class="form-control" placeholder="Message" required=""></textarea>
+                                <textarea asp-for="Message" id="message" cols="30" rows="4" class="form-control" placeholder="Message" required data-validation-required-message="Please enter a message."></textarea>
                             </div>
                             <div class="form-field submit-btn">
-                                <button id="submit" class="default-btn text-anim" type="submit" data-text="Send Massage">Send Massage</button>
+                                <button id="submit" class="default-btn text-anim" type="submit" data-text="Send Message">Send Message</button>
                             </div>
                         </div>
                         <div id="form-messages" class="alert" role="alert"></div>

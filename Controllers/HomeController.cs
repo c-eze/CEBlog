@@ -62,7 +62,7 @@ namespace CEBlog.Controllers
         {
             //This is where we will be emailing...
             model.Message = $"{model.Message} <hr/> Phone: {model.Phone}";
-            await _emailSender.SendContactEmailAsync(model.Email, model.Name, model.Subject, model.Message);
+            await _emailSender.SendContactEmailAsync(model.Email, model.FirstName, model.LastName, model.Message);
             return RedirectToAction("Index");
         }
 

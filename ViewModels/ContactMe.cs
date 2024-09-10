@@ -6,7 +6,11 @@ namespace CEBlog.ViewModels
 	{
         [Required]
 		[StringLength(80, ErrorMessage = "The {0} must be at least {2} and at most {1} characters long.", MinimumLength = 2)]
-		public string Name { get; set; }
+		public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(80, ErrorMessage = "The {0} must be at least {2} and at most {1} characters long.", MinimumLength = 2)]
+        public string LastName { get; set; }
 
         [Required]
         [EmailAddress]
@@ -15,10 +19,6 @@ namespace CEBlog.ViewModels
 
         [Phone]
         public string Phone { get; set; }
-
-        [Required]
-		[StringLength(50, ErrorMessage = "The {0} must be at least {2} and at most {1} characters long.", MinimumLength = 2)]
-		public string Subject { get; set; }
 
         [Required]
 		[StringLength(500, ErrorMessage = "The {0} must be at least {2} and at most {1} characters long.", MinimumLength = 2)]
