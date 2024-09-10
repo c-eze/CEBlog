@@ -56,10 +56,6 @@ namespace CEBlog.Controllers
 			return View();
 		}
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Contact(ContactMe model)
@@ -70,9 +66,17 @@ namespace CEBlog.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Terms()
+        {
+            return View();
+        }
 
+        public IActionResult Privacy()
+        {
+            return View();
+        }
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
