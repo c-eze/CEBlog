@@ -56,6 +56,10 @@ namespace CEBlog.Controllers
 			return View();
 		}
 
+        public IActionResult Privacy()
+        {
+            return View();
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Contact(ContactMe model)
