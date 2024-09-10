@@ -27,6 +27,7 @@ builder.Services.AddIdentity<BlogUser, IdentityRole>(options => options.SignIn.R
     .AddDefaultUI()
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages();
@@ -47,6 +48,9 @@ builder.Services.AddScoped<ISlugService, BasicSlugService>();
 
 //Register the Slug Service
 builder.Services.AddScoped<INavigationService, PostNavigationService>();
+
+//Register Memory Cache
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();

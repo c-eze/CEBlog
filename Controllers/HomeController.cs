@@ -15,41 +15,35 @@ namespace CEBlog.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IBlogEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
+		private readonly BlogSearchService _blogSearchService;
 
-		public HomeController(ILogger<HomeController> logger,
-                              IBlogEmailSender emailSender, 
-                              ApplicationDbContext context)
-		{
-			_logger = logger;
-			_emailSender = emailSender;
-			_context = context;
-		}
+        public HomeController(ILogger<HomeController> logger,
+                              IBlogEmailSender emailSender,
+                              ApplicationDbContext context,
+                              BlogSearchService blogSearchService)
+        {
+            _logger = logger;
+            _emailSender = emailSender;
+            _context = context;
+            _blogSearchService = blogSearchService;
+        }
 
-		public async Task<IActionResult> Index(int? page)
+        public IActionResult Index(int? page)
         {
             var pageNumber = page ?? 1;
             var pageSize = 7;
 
-			var posts = _context.Posts
-				.Include(p => p.Blog)
-				.Include(p => p.Comments)
-				.Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
-				.OrderByDescending(p => p.Created)
-				.ToPagedList(pageNumber, pageSize);
+            //var posts = _context.Posts
+            //	.Include(p => p.Blog)
+            //	.Include(p => p.Comments)
+            //	.Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
+            //	.OrderByDescending(p => p.Created)
+            //	.ToPagedList(pageNumber, pageSize);
 
-			return View(posts);
+            var posts = _blogSearchService.GetPosts()
+                .OrderByDescending(p => p.Created);
 
-			//var blogs = _context.Blogs.Where(
-			//    b => b.Posts.Any(p => p.ReadyStatus == Enums.ReadyStatus.ProductionReady))
-			//    .OrderByDescending(b => b.Created)
-			//    .ToPagedList(pageNumber, pageSize);
-
-			//var blogs = _context.Blogs
-			//             .Include(b => b.Author)
-			//          .OrderByDescending(b => b.Created)
-			//          .ToPagedList(pageNumber, pageSize);
-
-			//return View(blogs);
+            return View(posts.ToPagedList(pageNumber, pageSize));
 		}
 
 		public IActionResult About()

@@ -76,8 +76,8 @@ namespace CEBlog.Services
 			{
 				Email = "chikere.ezekannagha@gmail.com",
 				UserName = "chikere.ezekannagha@gmail.com",
-				FirstName = "Chikere",
-				LastName = "Ezekannagha",
+				FirstName = "Chik",
+				LastName = "Eze",
 				DisplayName = "Asst Manager",
 				PhoneNumber = "(800) 555-1213",
 				EmailConfirmed = true

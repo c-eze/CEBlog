@@ -2,6 +2,7 @@
 using CEBlog.Enums;
 using CEBlog.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Hosting;
 
 namespace CEBlog.Services
@@ -9,10 +10,13 @@ namespace CEBlog.Services
     public class BlogSearchService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMemoryCache _memoryCache;
 
-        public BlogSearchService(ApplicationDbContext context)
+        public BlogSearchService(ApplicationDbContext context,      
+                                 IMemoryCache memoryCache)
         {
             _context = context;
+            _memoryCache = memoryCache;
         }
 
         public IQueryable<Post> AuthorSearch(string authorId)
@@ -89,6 +93,25 @@ namespace CEBlog.Services
             }
 
             return posts.OrderByDescending(p => p.Created);
+        }
+
+        public IQueryable<Post> GetPosts()
+        {
+            IQueryable<Post> posts;
+
+            posts = _memoryCache.Get<IQueryable<Post>>("posts");
+
+            if(posts is null)
+            {
+                posts = _context.Posts.Include(p => p.Blog)
+                                      .Include(p => p.Comments)
+                                      .Include(p => p.Tags)
+                                      .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady);
+
+                _memoryCache.Set("employees", posts, TimeSpan.FromMinutes(1));
+            }
+
+            return posts;
         }
     }
 }
