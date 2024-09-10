@@ -1,0 +1,31 @@
+﻿@using CEBlog.Models
+@using CEBlog.Services
+
+@inject IImageService imageService
+
+@model IEnumerable<Post>
+
+@foreach (var post in Model) 
+{
+    <div class="widget-post-item img-hover-move">
+        <div class="widget-post-thumb media">
+            <a asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug">
+                    <img src="@imageService.DecodeImage(post.ImageData, post.ContentType)" alt="thumb">
+            </a>
+        </div>
+        <div class="widget-post-content">
+            <h3>
+                <a asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug" class="text-hover">@post.Title</a>
+            </h3>
+            <ul class="post-meta">
+                <li>
+                        <a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="@post.Blog.Name">@post.Blog.Name</a>
+                </li>
+                <li class="sep"></li>
+                <li>
+                    <a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="@post.Blog.Name" class="date">@post.Created.ToString("MM.dd.yyyy")</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+}

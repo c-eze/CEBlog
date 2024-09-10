@@ -205,26 +205,23 @@
 
     <footer class="footer-section bg-light-red">
         <div class="container">
-            <div class="row justify-content-around gy-4">
-                <div class="col-md-4 align-self-center">
+            <div class="row gy-lg-0 gy-4">
+                <div class="col-lg-4 col-md-6">
                     <div class="footer-widget widget">
                         <div class="about-widget">
                             <a asp-controller="Home" asp-action="Index" class="logo">
                                 <span class="site-title">Chikere</span>
                             </a>
-                            @*                             <p>Author of this blog md elizabeth nichols is a travel enthusiast, writer and street photographer.</p>*@
+                            <p>Coding blog with technology-related news, programming, and web development topics</p>
                             <a href="subscribe.html" class="default-btn text-anim" data-text="Subscribe">Subscribe</a> 
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-lg-3 col-md-6">
                     <div class="footer-widget widget">
                         <div class="category-widget">
                             <h3 class="widget-title">Links</h3>
-                            <ul>
-                                <li>
-                                    <a href="#">Blog</a>
-                                </li>
+                            <ul> 
                                 <li>
                                     <a asp-action="Error" asp-controller="Home">About</a>
                                 </li>
@@ -241,73 +238,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="footer-widget widget">
-                        <div class="category-widget">
-                            <h3 class="widget-title">Category</h3>
-                            <ul>
-                                <li>
-                                    <a href="#">Features</a>
-                                </li>
-                                <li>
-                                    <a href="#">Tutorials</a>
-                                </li>
-                                <li>
-                                    <a href="#">Q&A</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-               @*  <div class="col-lg-4 col-md-6">
+                <div class="col-lg-5 col-md-6">
                     <div class="footer-widget widget">
                         <div class="widget-post-items">
-                            <h3 class="widget-title">Editors Pick</h3>
-                            <div class="widget-post-item img-hover-move">
-                                <div class="widget-post-thumb media">
-                                    <a href="single.html">
-                                        <img src="assets/img/post-1.jpg" alt="thumb">
-                                    </a>
-                                </div>
-                                <div class="widget-post-content">
-                                    <h3>
-                                        <a href="single.html" class="text-hover">Enjoy the best afternoon at Canggu, Indonesia</a>
-                                    </h3>
-                                    <ul class="post-meta">
-                                        <li>
-                                            <a href="category.html">Travel</a>
-                                        </li>
-                                        <li class="sep"></li>
-                                        <li>
-                                            <a href="category.html" class="date">02.08.2024</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="widget-post-item img-hover-move">
-                                <div class="widget-post-thumb media">
-                                    <a href="single.html">
-                                        <img src="assets/img/post-2.jpg" alt="thumb">
-                                    </a>
-                                </div>
-                                <div class="widget-post-content">
-                                    <h3>
-                                        <a href="single.html" class="text-hover">In this Austrian town, extreme sports king</a>
-                                    </h3>
-                                    <ul class="post-meta">
-                                        <li>
-                                            <a href="category.html">Fashion</a>
-                                        </li>
-                                        <li class="sep"></li>
-                                        <li>
-                                            <a href="category.html" class="date">04.07.2024</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <h3 class="widget-title">Recent Posts</h3>
+                            <vc:recent-post></vc:recent-post>
                         </div>
                     </div>
                 </div>
+               @*  
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget widget">
                         <div class="contact-widget">
@@ -331,7 +270,7 @@
             </div>
             <div class="copyright-area">
                 <div class="copyright-text">
-                    © <span id="currentYear"></span> Chikere, All Rights Reserved. 
+                    © <span id="currentYear"></span> Chikere, All Rights Reserved. Design By <a href="https://themeforest.net/user/dynamiclayers/portfolio" target="_blank">DynamicLayers</a>
                 </div>
                 <ul class="footer-social">
                     <li>Follow:</li> 
