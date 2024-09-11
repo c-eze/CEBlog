@@ -1,0 +1,28 @@
+﻿@using CEBlog.ViewModels
+@model SubscribeTo
+
+<section class="subscribe-section padding-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="subscribe-page-inner">
+                    <div class="subscribe-img"><img src="~/img/subscribe.png" alt="img"></div>
+                    <div class="subscribe-wrap">
+                        <h2>Subscribe</h2>
+                        <h3>Sign up to our monthly newsletter and receive articles</h3>
+                        <form asp-action="Subscribe" asp-controller="Home" method="post" class="subscribe-form"> 
+                            <div class="mc-fields">
+                                <input asp-for="Email" id="mc_email" class="form-control" type="email" placeholder="Your Email" required data-validation-required-message="Please enter your email address.">
+                                <button type="submit" class="default-btn text-anim" data-text="Subscribe">Subscribe</button>                            
+                            </div>
+                            <div class="clearfix"></div>
+                            <div id="mc-form-messages" class="alert" role="alert"></div>
+                        </form>
+                        <p>Don't worry, we don't spam.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/.subscribe-section-->

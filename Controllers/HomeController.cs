@@ -66,6 +66,24 @@ namespace CEBlog.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Subscribe()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Subscribe([Bind("Email")] SubscribeTo model)
+        {
+            //This is where we will be emailing...
+            await _emailSender.SendSubscribeEmailAsync(model.Email);
+
+            string subject = "Thanks for signing up!";
+            string message = $"<b>Thanks for signing up!</b><br/><p>Welcome! You are now subscribed to Chikere.dev blog. We will be passing along updates to the blog and much more.</p><br/><p>The Chikere.dev Team</p>";
+            await _emailSender.SendEmailAsync(model.Email, subject, message);
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Terms()
         {
             return View();
