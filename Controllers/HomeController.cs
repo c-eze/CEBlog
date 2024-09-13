@@ -125,5 +125,11 @@ namespace CEBlog.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-    }
+
+        [Route("/StatusCodeError/{statusCode}")]
+		public IActionResult Error(int statusCode)
+		{
+			return View();
+		}
+	}
 }
