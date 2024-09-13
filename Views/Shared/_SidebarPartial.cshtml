@@ -37,10 +37,10 @@
                 </div>
                 <h3>Subscribe to Chikere.dev blog</h3>
             </div>
-            <form asp-action="Subscribe" asp-controller="Home" method="post" class="subscribe-form">
+            <form id="formSubscribe" class="subscribe-form">
                 <div class="mc-fields">
                     <input id="mc_email" class="form-control" type="email" name="mc_email" placeholder="Your Email" required>
-                    <button class="default-btn text-anim" data-text="Subscribe">Subscribe</button>
+                    <button class="default-btn text-anim" id="btnSubscribe" data-text="Subscribe">Subscribe</button>
                 </div>
                 <div class="clearfix"></div>
                 <div id="mc-form-messages" class="alert" role="alert"></div>
