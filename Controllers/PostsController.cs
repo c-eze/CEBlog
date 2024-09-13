@@ -417,7 +417,9 @@ namespace CEBlog.Controllers
                     foreach (var postText in postValues)
                     {
                         var postArticle = await _context.Posts
-                                .FirstOrDefaultAsync(p => p.Title == postText);
+                                .FirstOrDefaultAsync(p => p.Title.ToLower() == postText.ToLower());
+
+                        if (postArticle is null) { continue; }
 
                         var relatedPost = new Related()
                         {
