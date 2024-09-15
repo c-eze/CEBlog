@@ -3652,6 +3652,17 @@ blockquote p span:before {
     background: linear-gradient(to right, #990099, #606060);
 }
 
+.social-widget li.medium a {
+    background: #3A5795;
+    background: linear-gradient(to bottom, #3A5795 0%, #2B4886 100%);
+}
+
+
+.social-widget li.devto a {
+    background: #3A5795;
+    background: linear-gradient(to bottom, #3A5795 0%, #2B4886 100%);
+}
+
 .social-widget li.youtube a {
     background: #ff5252;
     background: linear-gradient(-90deg, #ff5252 0%, #ed1c24 100%);
