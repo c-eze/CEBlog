@@ -12,21 +12,20 @@
     <div class="container">
         <div class="page-content-wrap">
             <div class="page-content">
-                <h4>Category</h4>
-                <h2>@ViewBag.CategoryName<span>@ViewBag.TotalPosts Posts</span></h2>
-                <p>@ViewBag.Description</p>
+                <h4>Archives</h4>
+                <h2>@ViewBag.PublishDate <span>@ViewBag.TotalPosts Posts</span></h2>
+                <p></p>
             </div>
         </div>
     </div>
 </section>
 <!--/.page-header-->
 
-<section class="category-page padding">
+<section class="archive-page padding">
     <div class="container">
-        <div class="row gy-4"> 
-
+        <div class="row gy-4">
             @foreach (var post in Model)
-            { 
+            {
                 <article class="col-lg-4 col-md-6">
                     <div class="post-card img-hover-move">
                         <div class="post-thumb media">
@@ -55,18 +54,16 @@
                         </div>
                     </div>
                 </article>
-            }                   
+            }
         </div>
 
         <ul class="pagination-wrap justify-content-center">
             @if (Model.PageNumber != 1)
             {
                 <li>
-                    <a asp-action="CategoryIndex" asp-route-page="@(Model.PageNumber - 1)" asp-route-categoryname="@ViewBag.CategoryName">
+                    <a asp-action="ArchiveIndex" asp-route-page="@(Model.PageNumber - 1)" asp-route-publishdate="@ViewBag.PublishDate">
                         <svg xmlns="http://www.w3.org/2000/svg" height="23" viewBox="0 -960 960 960" width="23" fill="currentColor"><path d="M366.924-213.463 100.001-480.385l266.923-266.922 41.768 41.768-194.54 195.155h646.231v59.999H214.537l195.155 195.154-42.768 41.768Z" /></svg>
-
                     </a>
-
                 </li>
             }
 
@@ -74,20 +71,19 @@
             {
                 if (p == Model.PageNumber)
                 {
-                    <li><a asp-action="CategoryIndex" asp-route-page="@p" asp-route-categoryname="@ViewBag.CategoryName" class="active">@p</a></li>
+                    <li><a asp-action="ArchiveIndex" asp-route-page="@p" asp-route-publishdate="@ViewBag.PublishDate" class="active">@p</a></li>
                 }
                 else
                 {
-                    <li><a asp-action="CategoryIndex" asp-route-page="@p" asp-route-categoryname="@ViewBag.CategoryName">@p</a></li>
+                    <li><a asp-action="ArchiveIndex" asp-route-page="@p" asp-route-publishdate="@ViewBag.PublishDate">@p</a></li>
                 }
             }
 
             @if (Model.PageNumber != Model.PageCount)
             {
-                <li><a asp-action="CategoryIndex" asp-route-page="@(Model.PageNumber + 1)" asp-route-categoryname="@ViewBag.CategoryName"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="m553.846-253.847-42.153-43.384 152.77-152.77H180.001v-59.998h484.462l-152.77-152.77 42.153-43.384L779.999-480 553.846-253.847Z" /></svg></a></li>
+                <li><a asp-action="ArchiveIndex" asp-route-page="@(Model.PageNumber + 1)" asp-route-publishdate="@ViewBag.PublishDate"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor"><path d="m553.846-253.847-42.153-43.384 152.77-152.77H180.001v-59.998h484.462l-152.77-152.77 42.153-43.384L779.999-480 553.846-253.847Z" /></svg></a></li>
             }
         </ul>
         <!--/.pagination-wrap-->
-
     </div>
 </section>

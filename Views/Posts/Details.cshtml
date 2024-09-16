@@ -21,7 +21,7 @@
                     <ul class="post-meta">
                         <li><a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="@Model.Post.Blog.Name">@Model.Post.Blog.Name</a></li>
                         <li class="sep"></li>
-                        <li><a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="@Model.Post.Blog.Name" class="date">@Model.Post.Created.ToString("MM.dd.yyyy")</a></li>
+                        <li><a asp-action="ArchiveIndex" asp-controller="Posts" asp-route-publishdate="@Model.Post.Created.ToString("MMM.dd.yyyy")" class="date">@Model.Post.Created.ToString("MM.dd.yyyy")</a></li>
                     </ul>
                     <h2 class="post-title">@ViewBag.MainText</h2>
                 </header>
@@ -76,7 +76,7 @@
                                             <ul class="post-meta">
                                                 <li><a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="@item.Blog.Name">@item.Blog.Name</a></li>
                                                 <li class="sep"></li>
-                                                <li><a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="@item.Blog.Name" class="date">@item.Created.ToString("MM.dd.yyyy")</a></li>
+                                                <li><a asp-action="ArchiveIndex" asp-controller="Posts" asp-route-publishdate="@item.Created.ToString("MMM.dd.yyyy")" class="date">@item.Created.ToString("MM.dd.yyyy")</a></li>
                                             </ul>
                                             <h3><a asp-action="Details" asp-controller="Posts" asp-route-slug="@item.Slug" class="text-hover">@item.Title</a></h3>
                                             <ul class="post-card-footer">

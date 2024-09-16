@@ -55,6 +55,19 @@ namespace CEBlog.Controllers
             return View(await posts.ToListAsync());
 		}
 
+        public IActionResult ArchiveIndex(int? page, string? publishDate)
+        {          
+            var pageNumber = page ?? 1;
+            var pageSize = 6;
+
+            var posts = _blogSearchService.ArchiveSearch(publishDate);
+            
+            ViewData["PublishDate"] = publishDate;
+            ViewData["TotalPosts"] = posts.Count();
+
+            return View(posts.ToPagedList(pageNumber, pageSize));
+        }
+
         public async Task<IActionResult> AuthorIndex(int? page, string? authorId)
         {
             ViewData["AuthorDesc"] = "Meet Chikere, a developer in Alabama who specializes in programming full stack web applications and software in ASP.NET and C#.";

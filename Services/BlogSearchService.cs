@@ -19,6 +19,32 @@ namespace CEBlog.Services
             _memoryCache = memoryCache;
         }
 
+        public List<Post> ArchiveSearch(string? publishDate)
+        {
+            var posts = _context.Posts.Include(p => p.Blog)
+                                      .Include(p => p.Comments)
+                                      .Include(p => p.Tags)
+									  .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
+									  .OrderByDescending(p => p.Created)
+									  .ToList();
+
+			var newPosts = new List<Post>();
+
+			if (!string.IsNullOrEmpty(publishDate))
+            {
+                foreach (Post post in posts)
+                {
+                    string createdDate = post.Created.ToString("MMM.dd.yyyy");
+                    if (createdDate.Contains(publishDate))
+                    {
+                        newPosts.Add(post);
+                    }
+                }         
+                return newPosts;
+            }
+            return posts;
+        }
+
         public IQueryable<Post> AuthorSearch(string authorId)
         {
             var posts = _context.Posts.Include(p => p.Blog)
@@ -106,7 +132,8 @@ namespace CEBlog.Services
                 posts = _context.Posts.Include(p => p.Blog)
                                       .Include(p => p.Comments)
                                       .Include(p => p.Tags)
-                                      .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady);
+                                      .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
+									  .AsQueryable();
 
                 _memoryCache.Set("employees", posts, TimeSpan.FromMinutes(1));
             }
