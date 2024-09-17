@@ -4518,3 +4518,12 @@ body.modal-open{
         --dl-heading-color: var(--dl-body-color);
     }
 }
+
+#contact-link {
+    text-decoration: underline;
+}
+
+#contact-link:hover {
+    text-decoration:underline;
+    color: lightskyblue;
+}
