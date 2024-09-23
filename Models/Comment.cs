@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using CEBlog.Enums;
+using System.Runtime.CompilerServices;
 
 namespace CEBlog.Models
 {
@@ -26,6 +27,8 @@ namespace CEBlog.Models
         public string? ModeratedBody { get; set; }
 
         public ModerationType ModerationType { get; set; }
+
+        public CommentStatus CommentStatus { get; set; }
 
         //Navigation properties
         public virtual Post? Post { get; set; }

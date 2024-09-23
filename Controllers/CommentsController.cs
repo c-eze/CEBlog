@@ -63,6 +63,7 @@ namespace CEBlog.Controllers
             {
                 comment.AuthorId = _userManager.GetUserId(User);
                 comment.Created = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                comment.CommentStatus = Enums.CommentStatus.New;
 
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
