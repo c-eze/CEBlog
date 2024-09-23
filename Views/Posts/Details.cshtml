@@ -158,9 +158,9 @@
                     }
                    
                     <h3 id="postComments">Post Comments</h3>
-                    <div class="d-grid mb-4">
+@*                     <div class="d-grid mb-4">
                         <button class="default-btn" id="commentSection">@Model.Post.Comments.Count COMMENT(S)</button>
-                    </div>                    
+                    </div>   *@                  
 
                     <ul class="comments-box">
                         @foreach (var comment in Model.Post.Comments.OrderByDescending(c => c.Created))
