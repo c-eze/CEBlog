@@ -29,6 +29,7 @@ namespace CEBlog.Controllers
         }
 
         // GET: Blogs
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Blogs.Include(b => b.Author);
