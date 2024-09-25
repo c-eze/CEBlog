@@ -125,7 +125,7 @@
                         <div class="header-menu-wrap">
                             <ul class="nav-menu">
                                 <li>
-                                    <a href="#" data-text="Blog">Blog</a>
+                                    <a href="#" data-text="Categories">Categories</a>
                                     <ul>
                                         <li><a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="Features">Features</a></li>
                                         <li><a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="Tutorials">Tutorials</a></li>
@@ -386,14 +386,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="/js/prism.js"></script>
-    <script>
-        Prism.plugins.NormalizeWhitespace.setDefaults({
-            'remove-trailing': true,
-            'remove-indent': true,
-            'left-trim': true,
-            'right-trim': true
-        })
-    </script>
+   
 	@await RenderSectionAsync("Scripts", required: false)
 
 </body>

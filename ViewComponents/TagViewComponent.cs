@@ -19,6 +19,7 @@ namespace CEBlog.ViewComponents
 		{
             var tags = _context.Tags
                         .Select(t => t.Text.ToLower())
+                        .Distinct()
                         .ToList();
 
 			return View("Default", tags);
