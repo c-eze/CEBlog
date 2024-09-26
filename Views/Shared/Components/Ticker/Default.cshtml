@@ -1,0 +1,25 @@
+﻿@using CEBlog.Models
+@using CEBlog.ViewModels;
+
+@model List<TickerViewModel>
+
+<div class="ticker-wrap">
+    <div class="ticker-title">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+            <path d="M420.001-143.082v-276.919H307.694v-439.998H653.46l-73.461 255.768h158.076L420.001-143.082Z" />
+        </svg>
+        <span>Trending:</span>
+    </div>
+    <div class="ticker-slide-wrap">
+        <div class="swiper ticker-slider">
+            <div class="swiper-wrapper">
+                @foreach (var ticker in Model)
+                {
+                    <div class="swiper-slide">
+                        <a asp-action="Details" asp-controller="Posts" asp-route-slug="@ticker.Slug">@ticker.Title</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
