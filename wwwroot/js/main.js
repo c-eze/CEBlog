@@ -233,35 +233,35 @@
         });
 
         // Custom Cursor
-        //function customCursor() {
-        //    $('body').append('<div class="dl-cursor"><span></span></div>');
-        //    var cursor = $('.dl-cursor'),
-        //        dragCursor = $('.dl-drag-cursor');
+        function customCursor() {
+            $('body').append('<div class="dl-cursor"><span></span></div>');
+            var cursor = $('.dl-cursor'),
+                dragCursor = $('.dl-drag-cursor');
 
-        //    $(window).on('mousemove', function (e) {
-        //        cursor.css({
-        //            'transform': 'translate(' + (e.clientX - 5) + 'px,' + (e.clientY - 5) + 'px)',
-        //            'visibility': 'inherit'
-        //        });
-        //    });
+            $(window).on('mousemove', function (e) {
+                cursor.css({
+                    'transform': 'translate(' + (e.clientX - 5) + 'px,' + (e.clientY - 5) + 'px)',
+                    'visibility': 'inherit'
+                });
+            });
 
-        //    $(window).on('mouseout', function () {
-        //        cursor.css('visibility', 'hidden');
-        //    });
+            $(window).on('mouseout', function () {
+                cursor.css('visibility', 'hidden');
+            });
 
-        //    dragCursor.each(function () {
-        //        $(this).on('mouseleave', function () {
-        //            cursor.removeClass('dl-drag');
-        //        });
-        //        $(this).on('mouseover', function () {
-        //            cursor.addClass('dl-drag');
-        //        });
-        //    });
-        //}
+            dragCursor.each(function () {
+                $(this).on('mouseleave', function () {
+                    cursor.removeClass('dl-drag');
+                });
+                $(this).on('mouseover', function () {
+                    cursor.addClass('dl-drag');
+                });
+            });
+        }
 
-        //if ($('body').hasClass('viewport-lg')) {
-        //    customCursor();
-        //}
+        if ($('body').hasClass('viewport-lg')) {
+            customCursor();
+        }
 
         // Venobox Active
         $('.venobox').venobox({

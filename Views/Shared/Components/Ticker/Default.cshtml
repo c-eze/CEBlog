@@ -16,7 +16,7 @@
                 @foreach (var ticker in Model)
                 {
                     <div class="swiper-slide">
-                        <a asp-action="Details" asp-controller="Posts" asp-route-slug="@ticker.Slug">@ticker.Title</a>
+                        <a asp-action="Details" asp-controller="Posts" asp-route-slug="@ticker.Slug">@ticker.Title...</a>
                     </div>
                 }
             </div>
