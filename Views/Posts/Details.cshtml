@@ -132,32 +132,34 @@
                 <!--/.post-author-->
 
                 <div class="single-post-item">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <div class="comment-form-wrap mb-4">
-                            <h3>Leave a Reply</h3>
-                            <form asp-action="Create" asp-controller="Comments" method="post" class="comment-form form-horizontal">
-                                @Html.Hidden("PostId", Model.Post.Id)
-                                @Html.Hidden("Slug", Model.Post.Slug)
-                                <div class="comment-form-group">
-                                    <div class="form-field message">
-                                        <textarea id="comment" name="body" cols="30" rows="5" class="form-control comment" placeholder="Your Comment*" required=""></textarea>
-                                    </div>
+                    <div class="comment-form-wrap mb-4">
+                        <h3>Leave a Reply</h3>
+                        <form asp-action="Create" asp-controller="Comments" method="post" class="comment-form form-horizontal">
+                            @Html.Hidden("PostId", Model.Post.Id)
+                            @Html.Hidden("Slug", Model.Post.Slug)
+                            <div class="comment-form-group">
+                                <div class="form-field message">
+                                    <textarea id="comment" name="body" cols="30" rows="5" class="form-control comment" placeholder="Your Comment*" required=""></textarea>
+                                </div>
+
+                                @if (User.Identity.IsAuthenticated)
+                                {
                                     <div class="form-field submit-btn">
                                         <button id="submit" class="default-btn text-anim" type="submit" data-text="Submit Comment">Submit Comment</button>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="d-grid mb-4">
-                            <a asp-area="Identity" asp-page="/Account/Login" class="default-btn text-anim" data-text="Login To Add Comments">Login To Add Comments</a>
-                        </div>
-                    }
+                                }
+                                else
+                                {
+                                    <div class="form-field submit-btn">
+                                        <a asp-area="Identity" asp-page="/Account/Login" class="default-btn text-anim" data-text="Submit Comment">Submit Comment</a>
+                                    </div>
+                                }
+                            </div>
+                        </form>
+                    </div>
+                    
                    
-                    <h3 id="postComments">Post Comments</h3>
+                    <h3 id="postComments">Post Comments (@Model.Post.Comments.Count)</h3>
 @*                     <div class="d-grid mb-4">
                         <button class="default-btn" id="commentSection">@Model.Post.Comments.Count COMMENT(S)</button>
                     </div>   *@                  
@@ -199,6 +201,6 @@
             'remove-indent': true,
             'left-trim': true,
             'right-trim': true
-        })
+        });
     </script>
 }
