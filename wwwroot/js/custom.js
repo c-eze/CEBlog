@@ -10,7 +10,7 @@ function AddTag() {
         //Trigger my sweet alert for whatever condition is contained in the searchResult var
         swalWithDarkButton.fire({
             html: `<span class='font-weight-bolder'>${searchResult.toUpperCase()}</span>`
-        })
+        });
     }
     else {
         //Create a new Select option
@@ -38,7 +38,7 @@ function DeleteTag() {
     while (tagCount > 0) {
         if (tagList.selectedIndex >= 0) {
             tagList.options[tagList.selectedIndex] = null;
-            --tagCount
+            --tagCount;
         }
         else {
             tagCount = 0;

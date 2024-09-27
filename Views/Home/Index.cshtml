@@ -61,8 +61,8 @@
 									</div>
 									<form class="subscribe-form">
 										<div class="mc-fields">
-											<input id="mc-email" class="form-control" type="email" placeholder="Your Email" required="">
-											<button  id="btn-subscribe" class="default-btn text-anim" data-text="Subscribe"><span>S</span><span>u</span><span>b</span><span>s</span><span>c</span><span>r</span><span>i</span><span>b</span><span>e</span></button>
+											<input id="list-email" class="form-control" type="email" placeholder="Your Email" required>
+											<button id="list-subscribe" type="submit" formaction="javascript:void(0)" class="default-btn text-anim" data-text="Subscribe"><span>S</span><span>u</span><span>b</span><span>s</span><span>c</span><span>r</span><span>i</span><span>b</span><span>e</span></button>
 										</div>
 										<div class="clearfix"></div>
 										<div id="mc-form-messages" class="alert" role="alert"></div>
@@ -111,61 +111,5 @@
 <!--/.main-post-wrap-->
 	
 @section Scripts {
-    <script>
-		$(document).ready(function () {
-			$("#btnSubscribe").on("click", function () { 
-				var formData = new FormData();
-				formData.append("email", $("#mc_email").val());
-				$.ajax({
-					type: "POST",
-					url: "@Url.Action("PostSubscriber")",
-					dataType: "json",
-					contentType: false,
-					processData: false,
-					cache: false,
-					data: formData,
-					success: function() {
-						//reset form 
-						$("#mc_email").val("");
-					},
-					error: function() {
-						alert("Failed to receive the Data");
-					}
-				});
-			});
-
-			$("#btn-subscribe").on("click", function () {
-				var formData = new FormData();
-				formData.append("email", $("#mc-email").val());
-				$.ajax({
-					type: "POST",
-					url: "@Url.Action("PostSubscriber")",
-					dataType: "json",
-					contentType: false,
-					processData: false,
-					cache: false,
-					data: formData,
-					success: function () {
-						//reset form
-						$("#mc-email").val("");
-					},
-					error: function () {
-						alert("Failed to receive the Data");
-					}
-				});
-			});
-
-			$("p").tooltip();
-		});
-
-
-		var swalMsg = '@TempData["SweetAlert"]'
-		if (swalMsg != "") {
-			Swal.fire({
-				icon: 'success',
-				title: swalMsg,
-				timer: 2500
-			})
-		}
-	</script>
+    <script src="~/js/subscribe.js"></script>
 }

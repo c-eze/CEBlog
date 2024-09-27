@@ -278,7 +278,7 @@
     </div>
     <!--scrollup-->
 
-@*     <div class="modal vixto-modal" id="subscribeModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false">
+    <div class="modal vixto-modal" id="subscribeModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-inner">
@@ -286,8 +286,8 @@
                     <div class="subscribe-card">
                         <div class="subscribe-heading">
                             <img class="bell-animation" src="~/img/bell.png" alt="bell">
-                            <h3>Subscribe to Elizabeth Nichols blog</h3>
-                            <p>Join 5000+ people to get notified about elizabeth nichols blog.</p>
+                            <h3>Subscribe to Chikere.dev blog</h3>
+                            <p>Get notified about new updates to the blog.</p>
                         </div>
                         <form action="php/mailchimp-subscribe.php" id="ajax_mc_form" class="subscribe-form">
                             <div class="mc-fields">
@@ -313,7 +313,7 @@
                 </div>
             </div>
         </div>
-    </div> *@
+    </div>
     <!-- Subscribe Modal -->
 
     <button class="theme-toggle" id="theme-toggle" title="Toggles light & dark" aria-label="auto" aria-live="polite">
@@ -339,6 +339,7 @@
 
     <!--jQuery Lib-->
     <script src="~/js/jquary-3.6.0.min.js"></script>
+	<script src="~/lib/jquery/jquery-3.7.1.min.js"></script>
     <!-- Bootstrap core JS-->
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     @* <script src="~/js/bootstrap.min.js"></script> *@
@@ -350,20 +351,20 @@
     <script src="~/js/main.js"></script>
  
 	<!-- Summernote -->
-	<script src="~/js/summernote-bs4.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
 @* 	<!-- Core theme JS-->
 	<script src="~/js/scripts.js"></script> *@
 
+    @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+    <script src="/js/prism.js"></script>
+
 	<!-- Sweet Alert 2-->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-	<!-- Summernote insert-->
-	<script src="//code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-	<script src="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="/js/prism.js"></script>
+    <!-- Summernote insert-->
+    @* <script src="//code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> *@
+    <script src="//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
    
 	@await RenderSectionAsync("Scripts", required: false)
 

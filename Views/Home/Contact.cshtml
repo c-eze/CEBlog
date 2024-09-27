@@ -31,7 +31,7 @@
                                 <input asp-for="Phone" type="text" id="phone" class="form-control" placeholder="Phone Number" required data-validation-required-message="Please enter your phone number.">
                             </div>
                             <div class="form-field message">
-                                <textarea asp-for="Message" id="message" cols="30" rows="4" class="form-control" placeholder="Message" required data-validation-required-message="Please enter a message."></textarea>
+                                <textarea asp-for="Message" cols="30" rows="4" class="form-control" placeholder="Message" required data-validation-required-message="Please enter a message."></textarea>
                             </div>
                             <div class="form-field submit-btn">
                                 <button id="submit" class="default-btn text-anim" type="submit" data-text="Send Message">Send Message</button>
@@ -45,16 +45,3 @@
     </div>
 </section>
 <!--/.contact-section-->
-
-@section Scripts{
-
-    <script>
-        //Default font size but not for placeholder...
-        $('#Message').summernote({
-            placeholder: "Message"
-        });
-    </script>
-
-
-
-}

@@ -3527,7 +3527,8 @@ blockquote p span:before {
     border: 1px solid #f9e498;
 }
 
-.subscribe-form button {
+.subscribe-form button,
+.subscribe-form a {
     background-color: #f9e498;
     margin-top: 10px;
     width: 100%;
