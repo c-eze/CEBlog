@@ -275,16 +275,16 @@
         document.querySelectorAll('.text-anim').forEach(btnText => btnText.innerHTML = '<span>' + btnText.textContent.split('').join('</span><span>') + '</span>');
 
         // Subscribe Modal
-        if ($('body').hasClass('viewport-lg')) {
-            var modalID = document.getElementById('subscribeModal');
-            if( modalID != null){
-                var subscribeModal = new bootstrap.Modal(modalID);
-                setTimeout(function () {
-                    subscribeModal.show();
-                }, 10000);
-            }
+        //if ($('body').hasClass('viewport-lg')) {
+        //    var modalID = document.getElementById('subscribeModal');
+        //    if( modalID != null){
+        //        var subscribeModal = new bootstrap.Modal(modalID);
+        //        setTimeout(function () {
+        //            subscribeModal.show();
+        //        }, 10000);
+        //    }
             
-        }
+        //}
 
     });
 
