@@ -1,10 +1,14 @@
 ﻿$(document).ready(function(){
     $("#btnSubscribe").on("click", function(){
-        submitSubcriber("#mc_email");
+        submitSubcriber("#mc-email");
     });
 
     $("#list-subscribe").on("click", function(){
         submitSubcriber("#list-email");
+    });
+
+    $("#modalBtn").on("click", function () {
+        submitSubcriber("#modal-email");
     });
 });
 
