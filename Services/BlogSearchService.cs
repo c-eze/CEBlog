@@ -132,7 +132,9 @@ namespace CEBlog.Services
                 posts = _context.Posts.Include(p => p.Blog)
                                       .Include(p => p.Comments)
                                       .Include(p => p.Tags)
-                                      .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
+									  .Include(p => p.Comments)
+									  .ThenInclude(c => c.Replies)
+									  .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
 									  .AsQueryable();
 
                 _memoryCache.Set("employees", posts, TimeSpan.FromMinutes(1));

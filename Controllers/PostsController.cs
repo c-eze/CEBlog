@@ -169,6 +169,9 @@ namespace CEBlog.Controllers
                 .ThenInclude(c => c.Author)
                 .Include(p => p.Comments)
                 .ThenInclude(c => c.Moderator)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.Replies)
+                .ThenInclude(r => r.Author)
                 .FirstOrDefaultAsync(m => m.Slug == slug);
 
             if (post == null)
@@ -187,6 +190,9 @@ namespace CEBlog.Controllers
                 .ThenInclude(c => c.Author)
                 .Include(p => p.Comments)
                 .ThenInclude(c => c.Moderator)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.Replies)
+                .ThenInclude(r => r.Author)
                 .ToListAsync();
 
             var relPosts = allPosts.GroupJoin(relatedIds,
@@ -206,6 +212,12 @@ namespace CEBlog.Controllers
                             })
                 .Where(r => r.Id is not null);
 
+            int totalReplies = 0;
+            foreach (var comment in post.Comments)
+            {
+                totalReplies += comment.Replies.Count();
+            }
+
             var dataVM = new PostDetailViewModel()
             {
                 Post = post,
@@ -215,7 +227,8 @@ namespace CEBlog.Controllers
                 RelatedPosts = relPosts
                       .Select(b => b.x)
                       .Select(a => a.Article)
-                      .ToList()
+                      .ToList(),
+                TotalComments = post.Comments.Count() + totalReplies
             };
 
             ViewData["HeaderImage"] = _imageService.DecodeImage(post.ImageData, post.ContentType);

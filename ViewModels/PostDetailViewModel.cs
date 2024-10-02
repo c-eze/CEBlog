@@ -8,5 +8,6 @@ namespace CEBlog.ViewModels
         public List<string> Tags { get; set; } = new List<string>();
 
         public List<Post> RelatedPosts { get; set; } = new List<Post>();
+        public int TotalComments { get; set; }
     }
 }

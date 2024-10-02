@@ -3198,6 +3198,7 @@ blockquote p span:before {
     font-size: 15px;
     font-weight: 600;
     color: var(--dl-grey-color);
+    cursor: pointer;
 }
 
 .comment-area .reply:hover {

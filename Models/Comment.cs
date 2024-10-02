@@ -34,5 +34,6 @@ namespace CEBlog.Models
         public virtual Post? Post { get; set; }
         public virtual BlogUser? Author { get; set; }
         public virtual BlogUser? Moderator { get; set; }
-    }
+		public virtual ICollection<Reply> Replies { get; set; } = new HashSet<Reply>();
+	}
 }

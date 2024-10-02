@@ -130,11 +130,11 @@
                     </div>
                 </div>
                 <!--/.post-author-->
-
+                <div id="reply"></div>
                 <div class="single-post-item">
                     <div class="comment-form-wrap mb-4">
                         <h3>Leave a Reply</h3>
-                        <form asp-action="Create" asp-controller="Comments" method="post" class="comment-form form-horizontal">
+                        <form id="add-comment-form" asp-action="Create" asp-controller="Comments" method="post" class="comment-form form-horizontal">
                             @Html.Hidden("PostId", Model.Post.Id)
                             @Html.Hidden("Slug", Model.Post.Slug)
                             <div class="comment-form-group">
@@ -145,25 +145,27 @@
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <div class="form-field submit-btn">
-                                        <button id="submit" class="default-btn text-anim" type="submit" data-text="Submit Comment">Submit Comment</button>
+                                        <button id="submit" class="default-btn text-anim" type="submit" data-text="Comment">Comment</button>
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="form-field submit-btn">
-                                        <a asp-area="Identity" asp-page="/Account/Login" class="default-btn text-anim" data-text="Submit Comment">Submit Comment</a>
+                                        <a asp-area="Identity" asp-page="/Account/Login" class="default-btn text-anim" data-text="Comment">Comment</a>
                                     </div>
                                 }
                             </div>
                         </form>
                     </div>
-                    
-                   
-                    <h3 id="postComments">Post Comments (@Model.Post.Comments.Count)</h3>
-@*                     <div class="d-grid mb-4">
-                        <button class="default-btn" id="commentSection">@Model.Post.Comments.Count COMMENT(S)</button>
-                    </div>   *@                  
-
+                    @{
+                        int totalComments = 0;
+                        foreach (var comment in Model.Post.Comments)
+                        {
+                            totalComments += comment.Replies.Count();
+                        }
+                        totalComments += Model.Post.Comments.Count();
+                    }
+                    <h3 id="postComments">Post Comments (@totalComments)</h3>
                     <ul class="comments-box">
                         @foreach (var comment in Model.Post.Comments.OrderByDescending(c => c.Created))
                         {
@@ -176,9 +178,71 @@
                                         </div>
                                         <div class="comment-area">
                                             <p>@comment.Body</p>
+                                            <p hidden>@comment.Author.FullName</p>
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <a class="reply mb-3">Reply</a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-area="Identity" asp-page="/Account/Login" class="reply">Reply</a>
+                                            }
+                                            <form asp-action="Create" asp-controller="Replies" method="post" class="comment-form form-horizontal" hidden>
+                                                @Html.Hidden("PostId", Model.Post.Id)
+                                                @Html.Hidden("Slug", Model.Post.Slug)
+                                                @Html.Hidden("CommentId", comment.Id)
+                                                <div class="comment-form-group">
+                                                    <div class="form-field message">
+                                                        <textarea name="body" cols="30" rows="5" class="form-control comment" placeholder="Your Comment*" required></textarea>
+                                                    </div>
+                                                    <div class="form-field submit-btn">
+                                                        <button class="default-btn text-anim" type="submit" data-text="Reply">Reply</button>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
+                                <ul class="children">
+                                    @foreach (var reply in comment.Replies)
+                                    {
+                                        <li class="comment">
+                                            <div class="comment-inner">
+                                                <div class="comment-thumb"><img src="@imageService.DecodeImage(reply.Author.ImageData, reply.Author.ContentType)" alt="img"></div>
+                                                <div class="comment-wrap">
+                                                    <div class="comments-meta">
+                                                        <h4>@reply.Author.FullName <span>@reply.Created.ToString("MM.dd.yyyy") at @reply.Created.ToString("hh:mm")</span></h4>
+                                                    </div>
+                                                    <div class="comment-area">
+                                                        <p>@reply.Body</p>
+                                                        <p hidden>@reply.Author.FullName</p>
+                                                        @if (User.Identity.IsAuthenticated)
+                                                        {
+                                                            <a class="reply mb-3">Reply</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a asp-area="Identity" asp-page="/Account/Login" class="reply">Reply</a>
+                                                        }
+                                                        <form asp-action="Create" asp-controller="Replies" method="post" class="comment-form form-horizontal" hidden>
+                                                            @Html.Hidden("PostId", Model.Post.Id)
+                                                            @Html.Hidden("Slug", Model.Post.Slug)
+                                                            @Html.Hidden("CommentId", comment.Id)
+                                                            <div class="comment-form-group">
+                                                                <div class="form-field message">
+                                                                    <textarea name="body" cols="30" rows="5" class="form-control comment" placeholder="Your Comment*" required></textarea>
+                                                                </div>
+                                                                <div class="form-field submit-btn">
+                                                                    <button class="default-btn text-anim" type="submit" data-text="Reply">Reply</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
                             </li>
                         }                    
                     </ul>                    
@@ -195,7 +259,8 @@
 <!--/.main-post-wrap-->
 
 @section Scripts {
-    <script src="~/js/subscribe.js" type="text/javascript"></script>
+	<script src="~/js/subscribe.js" type="text/javascript"></script>
+    <script src="~/js/comment.js"></script>
     <script type="text/javascript">
         Prism.plugins.NormalizeWhitespace.setDefaults({
             'remove-trailing': true,
