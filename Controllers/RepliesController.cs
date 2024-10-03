@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using CEBlog.Data;
 using CEBlog.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using CEBlog.Services;
 
 namespace CEBlog.Controllers
 {
@@ -15,11 +17,15 @@ namespace CEBlog.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<BlogUser> _userManager;
+        private readonly IBlogEmailSender _emailSender;
 
-        public RepliesController(ApplicationDbContext context, UserManager<BlogUser> userManager)
+        public RepliesController(ApplicationDbContext context,
+                                 UserManager<BlogUser> userManager,
+                                 IBlogEmailSender emailSender)
         {
             _context = context;
             _userManager = userManager;
+            _emailSender = emailSender;
         }
 
         // GET: Replies
@@ -74,6 +80,11 @@ namespace CEBlog.Controllers
 
                 _context.Add(reply);
                 await _context.SaveChangesAsync();
+
+
+                string subject = $"[Chikere.Dev] New comment";
+                string message = $"<p>A new comment on the post '{slug}' is waiting for your approval</p><p>https://chikere.dev/{slug}</p><br/><p>Email: {_userManager.GetUserName(User)}</p><p>Comment: {reply.Body}</p> ";
+                await _emailSender.SendEmailAsync("chikeredev@gmail.com", subject, message);
 
                 return RedirectToAction("Details", "Posts", new { slug }, "commentSection");
             }

@@ -32,14 +32,7 @@ namespace CEBlog.Controllers
         public IActionResult Index(int? page)
         {
             var pageNumber = page ?? 1;
-            var pageSize = 7;
-
-            //var posts = _context.Posts
-            //	.Include(p => p.Blog)
-            //	.Include(p => p.Comments)
-            //	.Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
-            //	.OrderByDescending(p => p.Created)
-            //	.ToPagedList(pageNumber, pageSize);
+            var pageSize = 7; 
 
             var posts = _blogSearchService.GetPosts()
                 .OrderByDescending(p => p.Created);
@@ -68,6 +61,7 @@ namespace CEBlog.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<JsonResult> PostSubscriber (IFormCollection formCollection)
         {
             SubscribeTo subscriber = new SubscribeTo();

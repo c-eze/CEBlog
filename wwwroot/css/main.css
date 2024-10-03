@@ -137,6 +137,11 @@ ul {
     margin: 0;
 }
 
+.single-post-content ul {
+    list-style: disc !important;
+    list-style-position: inside !important;
+}
+
 /* Form Input Color */
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {

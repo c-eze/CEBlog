@@ -227,8 +227,7 @@ namespace CEBlog.Controllers
                 RelatedPosts = relPosts
                       .Select(b => b.x)
                       .Select(a => a.Article)
-                      .ToList(),
-                TotalComments = post.Comments.Count() + totalReplies
+                      .ToList() 
             };
 
             ViewData["HeaderImage"] = _imageService.DecodeImage(post.ImageData, post.ContentType);
@@ -467,7 +466,12 @@ namespace CEBlog.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return View("Index", _context.Posts
+                .Include(p => p.Blog)
+                .Include(p => p.Author)
+                .Include(p => p.Tags)
+                .Include(p => p.RelatedPosts)
+                .Include(p => p.Comments));
             }
             ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", post.AuthorId);
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description", post.BlogId);
