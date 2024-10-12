@@ -182,7 +182,11 @@ namespace CEBlog.Controllers
             var relatedPosts = new List<Post>();
             foreach (var postId in relatedPostsIds)
             {
-                relatedPosts.Add(_context.Posts.Include(p => p.Blog).Include(p => p.Comments).FirstOrDefault(p => p.Id == postId));
+                relatedPosts.Add(_context.Posts
+                    .Include(p => p.Blog)
+                    .Include(p => p.Comments)
+                    .ThenInclude(c => c.Replies)
+                    .FirstOrDefault(p => p.Id == postId));
             }
 
             int totalReplies = 0;

@@ -21,12 +21,7 @@ namespace CEBlog.Services
 
         public List<Post> ArchiveSearch(string? publishDate)
         {
-            var posts = _context.Posts.Include(p => p.Blog)
-                                      .Include(p => p.Comments)
-                                      .Include(p => p.Tags)
-									  .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
-									  .OrderByDescending(p => p.Created)
-									  .ToList();
+            var posts = GetPosts().OrderByDescending(p => p.Created).ToList();
 
 			var newPosts = new List<Post>();
 
@@ -47,10 +42,7 @@ namespace CEBlog.Services
 
         public IQueryable<Post> AuthorSearch(string authorId)
         {
-            var posts = _context.Posts.Include(p => p.Blog)
-                                      .Include(p => p.Author)
-                                      .Include(p => p.Comments)
-                                      .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady).AsQueryable();
+            var posts = GetPosts();
 
             if (!string.IsNullOrEmpty(authorId))
             {
@@ -62,10 +54,7 @@ namespace CEBlog.Services
 
         public IQueryable<Post> TagSearch(string tagName)
         {
-            var posts = _context.Posts.Include(p => p.Blog)
-                                      .Include(p => p.Comments)
-                                      .Include(p => p.Tags)
-                                      .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady).AsQueryable();
+            var posts = GetPosts();
 
             if (tagName != null)
             {
@@ -82,9 +71,7 @@ namespace CEBlog.Services
 
         public IQueryable<Post> CategorySearch(string categoryName)
         {
-            var posts = _context.Posts.Include(p => p.Blog)
-                                      .Include(p => p.Comments)
-                                      .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady).AsQueryable();
+            var posts = GetPosts();
 
             if (categoryName != null)
             {
@@ -99,9 +86,7 @@ namespace CEBlog.Services
 
         public IQueryable<Post> Search(string searchTerm)
         {
-            var posts = _context.Posts.Include(p => p.Blog)
-                                      .Include(p => p.Comments)
-                                      .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady).AsQueryable();
+            var posts = GetPosts();
 
             if (searchTerm != null)
             {

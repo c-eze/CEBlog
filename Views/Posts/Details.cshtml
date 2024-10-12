@@ -54,6 +54,9 @@
                     </ul>
                 </footer>
                 <!--/.tags & social icons-->
+                @{
+                    int totalComments = 0;
+                }
                 @if (Model.RelatedPosts.Count() > 0)
                 {
                     <div class="single-post-item">
@@ -79,6 +82,13 @@
                                                 <li><a asp-action="Details" asp-controller="Posts" asp-route-slug="@item.Slug" class="read-more">Continue Reading</a></li>
                                                 <li>
                                                     <a asp-action="Details" asp-controller="Posts" asp-route-slug="@item.Slug" asp-fragment="postComments" class="comment">
+                                                        @{
+                                                            totalComments = item.Comments.Count();
+                                                            foreach (var comment in item.Comments)
+                                                            {
+                                                                totalComments += comment.Replies.Count();
+                                                            }
+                                                        }
                                                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
                                                             <path d="M250.001-410.001h459.998v-59.998H250.001v59.998Zm0-120h459.998v-59.998H250.001v59.998Zm0-120h459.998v-59.998H250.001v59.998Zm609.998 531.537L718.461-260.001H172.309q-30.308 0-51.308-21t-21-51.308v-455.382q0-30.308 21-51.308t51.308-21h615.382q30.308 0 51.308 21t21 51.308v669.227ZM172.309-320h571.69L800-264.615v-523.076q0-4.616-3.846-8.463-3.847-3.846-8.463-3.846H172.309q-4.616 0-8.463 3.846-3.846 3.847-3.846 8.463v455.382q0 4.616 3.846 8.463 3.847 3.846 8.463 3.846ZM160-320V-800v480Z" />
                                                         </svg><span>@item.Comments.Count()</span>
@@ -158,7 +168,7 @@
                         </form>
                     </div>
                     @{
-                        int totalComments = 0;
+                        totalComments = 0;
                         foreach (var comment in Model.Post.Comments)
                         {
                             totalComments += comment.Replies.Count();
