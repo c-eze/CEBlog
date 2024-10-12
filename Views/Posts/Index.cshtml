@@ -2,7 +2,7 @@
 @using CEBlog.Models
 
 @inject IImageService imageService
-@model IEnumerable<CEBlog.Models.Post>
+@model IEnumerable<Post>
 
 @{
 	ViewData["Title"] = "Index";
@@ -45,15 +45,15 @@
 						@Html.DisplayFor(modelItem => item.Updated)
 					</td>
 					<td>
-						<div class="dropdown dropend">
-							<button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false" style="border:none;">
+						<div class="dropdown dropleft">
+							<button type="button" class="btn" data-toggle="dropdown" aria-expanded="false" style="border:none;">
 								<i class="fa-solid fa-ellipsis"></i>
 							</button>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pencil"></i> Edit</a></li>
-								<li><a class="dropdown-item" asp-action="Details" asp-route-slug="@item.Slug"><i class="fa-solid fa-eye"></i> View</a></li>
-								<li><a class="dropdown-item" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash-can"></i> Trash</a></li>
-							</ul>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pencil"></i> Edit</a>
+								<a class="dropdown-item" asp-action="Details" asp-route-slug="@item.Slug"><i class="fa-solid fa-eye"></i> View</a>
+								<a class="dropdown-item" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash-can"></i> Trash</a>
+							</div>
 						</div>
 					</td>
 				</tr>

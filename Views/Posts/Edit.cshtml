@@ -1,5 +1,5 @@
 ﻿@using CEBlog.Enums
-@model CEBlog.Models.Post
+@model CEBlog.ViewModels.PostEditViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -16,36 +16,36 @@
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="@Model.Post.Id" />
 
             <div class="form-group">
-                <label asp-for="BlogId" class="control-label"></label>
-                <select asp-for="BlogId" class="form-control" asp-items="ViewBag.BlogId"></select>
-                <span asp-validation-for="BlogId" class="text-danger"></span>
+                <label asp-for="@Model.Post.BlogId" class="control-label"></label>
+                <select asp-for="@Model.Post.BlogId" class="form-control" asp-items="ViewBag.BlogId"></select>
+                <span asp-validation-for="@Model.Post.BlogId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <label asp-for="@Model.Post.Title" class="control-label"></label>
+                <input asp-for="@Model.Post.Title" class="form-control" />
+                <span asp-validation-for="@Model.Post.Title" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
+                <label asp-for="@Model.Post.Image" class="control-label"></label>
                 <input type="file" name="newImage" class="form-control" accept=".png,.jpg,.jpeg,.gif" />
-                <span asp-validation-for="Image" class="text-danger"></span>
+                <span asp-validation-for="@Model.Post.Image" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Abstract" class="control-label"></label>
-                <textarea asp-for="Abstract" class="form-control"></textarea>
-                <span asp-validation-for="Abstract" class="text-danger"></span>
+                <label asp-for="@Model.Post.Abstract" class="control-label"></label>
+                <textarea asp-for="@Model.Post.Abstract" class="form-control"></textarea>
+                <span asp-validation-for="@Model.Post.Abstract" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <textarea asp-for="Content" class="form-control"></textarea>
-                <span asp-validation-for="Content" class="text-danger"></span>
+                <label asp-for="@Model.Post.Content" class="control-label"></label>
+                <textarea id="Content" asp-for="@Model.Post.Content" class="form-control"></textarea>
+                <span asp-validation-for="@Model.Post.Content" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -79,43 +79,18 @@
             </div>
             <!--./Manage Tags-->
 
-            <div class="form-group">
-                <div class="row">
-                    <div class="col">
-                        <label class="control-label">Related Articles</label>
-                    </div>
-                </div>
-
-                <div class="row mb-2">
-                    <div class="col">
-                        <div class="row mb-2">
-                            <div class="col">
-                                <div class="form-group"> 
-                                    <select id="PostTitle" asp-for="Id" class="form-control" asp-items="ViewBag.PostId" size="5" multiple></select>
-                                    <span asp-validation-for="Id" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col d-grid">
-                                <button onclick="AddRelatedPosts()" name="AddPost" type="button" class="btn btn-dark btn-sm">Add Post</button>
-                            </div> 
-                            <div class="col d-grid">
-                                <button onclick="RemoveRelatedPosts()" name="RemovePost" type="button" class="btn btn-dark btn-sm">Remove Post</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col d-grid">
-                        <select name="PostValues" id="PostList" size="4" multiple></select>
-                    </div>
-                </div>
+            <div class="form-group mb-2"> 
+                <label asp-for="@Model.drpPosts"></label><br />
+                <select asp-for="@Model.PostsIds" asp-items="Model.drpPosts" class="form-control" multiple="multiple" id="Posts_dropdown"></select>
+                <span asp-validation-for="@Model.drpPosts" class="text-danger"></span>
             </div>
+
             <!--./Related Articles-->
 
             <div class="form-group mb-2">
-                <label asp-for="ReadyStatus" class="control-label"></label>
-                <select asp-for="ReadyStatus" class="form-control" asp-items="Html.GetEnumSelectList<ReadyStatus>()"></select>
-                <span asp-validation-for="ReadyStatus" class="text-danger"></span>
+                <label asp-for="@Model.Post.ReadyStatus" class="control-label"></label>
+                <select asp-for="@Model.Post.ReadyStatus" class="form-control" asp-items="Html.GetEnumSelectList<ReadyStatus>()"></select>
+                <span asp-validation-for="@Model.Post.ReadyStatus" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -130,7 +105,11 @@
 </div>
 
 @section Scripts {
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#Posts_dropdown').multiselect();
+        });
+    </script>
     <script>
 
         let tagValues = '@ViewData["TagValues"]';

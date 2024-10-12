@@ -7,9 +7,9 @@ namespace CEBlog.Models
     {
         public int Id { get; set; }
         public int PostId { get; set; }
-        public int? ArticleId { get; set; }
+        public int ArticleId { get; set; }
 
         //Navigation properties
-        public virtual Post? Post { get; set; } 
-    }
+        public virtual Post? Post { get; set; }
+	}
 }

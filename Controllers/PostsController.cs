@@ -141,7 +141,6 @@ namespace CEBlog.Controllers
             var pageNumber = page ?? 1;
             var pageSize = 5;
 
-			//var posts = _context.Posts.Where(p => p.BlogId == id).ToList();
             var posts = _context.Posts
                 .Where(p => p.BlogId == id && p.ReadyStatus == ReadyStatus.ProductionReady)
                 .OrderByDescending(p => p.Created)
@@ -154,7 +153,7 @@ namespace CEBlog.Controllers
         // GET: Posts/Details/5
         public async Task<IActionResult> Details(string slug)
         {
-            ViewData["Title"] = "Post Details Page";
+            ViewData["Title"] = "Post Details";
             if (string.IsNullOrEmpty(slug))
             {
                 return NotFound();
@@ -179,38 +178,12 @@ namespace CEBlog.Controllers
                 return NotFound();
             }
 
-            var relatedIds = post.RelatedPosts.Select(r => r.ArticleId);
-
-            List<Post> allPosts = await _context.Posts
-                .Include(p => p.Blog)
-                .Include(p => p.Author)
-                .Include(p => p.Tags)
-                .Include(p => p.RelatedPosts)
-                .Include(p => p.Comments)
-                .ThenInclude(c => c.Author)
-                .Include(p => p.Comments)
-                .ThenInclude(c => c.Moderator)
-                .Include(p => p.Comments)
-                .ThenInclude(c => c.Replies)
-                .ThenInclude(r => r.Author)
-                .ToListAsync();
-
-            var relPosts = allPosts.GroupJoin(relatedIds,
-                                                post => post.Id,
-                                                related => related,
-                                                (post, related) =>
-                                                new
-                                                {
-                                                    Article = post,
-                                                    Id = related
-                                                })
-                .SelectMany(x => x.Id.DefaultIfEmpty(),
-                            (x, Id) => new
-                            {
-                                x,
-                                Id
-                            })
-                .Where(r => r.Id is not null);
+            var relatedPostsIds = post.RelatedPosts.Select(r => r.ArticleId).ToList();
+            var relatedPosts = new List<Post>();
+            foreach (var postId in relatedPostsIds)
+            {
+                relatedPosts.Add(_context.Posts.Include(p => p.Blog).Include(p => p.Comments).FirstOrDefault(p => p.Id == postId));
+            }
 
             int totalReplies = 0;
             foreach (var comment in post.Comments)
@@ -224,10 +197,7 @@ namespace CEBlog.Controllers
                 Tags = post.Tags
                         .Select(t => t.Text.ToLower())
                         .ToList(),
-                RelatedPosts = relPosts
-                      .Select(b => b.x)
-                      .Select(a => a.Article)
-                      .ToList() 
+                RelatedPosts = relatedPosts
             };
 
             ViewData["HeaderImage"] = _imageService.DecodeImage(post.ImageData, post.ContentType);
@@ -311,7 +281,6 @@ namespace CEBlog.Controllers
                     });
                 }
 
-
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
@@ -325,6 +294,7 @@ namespace CEBlog.Controllers
         // GET: Posts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null || _context.Posts == null)
             {
                 return NotFound();
@@ -340,36 +310,34 @@ namespace CEBlog.Controllers
                 return NotFound();
             }
 
-            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
+			var postsIds = new List<int>();
+
+			//Get post related articles and add each into postsIds list
+			post.RelatedPosts.ToList().ForEach(result => postsIds.Add(result.ArticleId));
+
+			ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
             ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Title", post.Id);
             ViewData["TagValues"] = string.Join(",", post.Tags.Select(t => t.Text));
 
-            var relatedIds = post.RelatedPosts.Select(r => r.ArticleId);
+            var relatedPosts = _context.Posts.Select(p => new SelectListItem { Text = p.Title, Value = p.Id.ToString() }).ToList();
 
-            List<Post> postTitles = await _context.Posts
-                .ToListAsync();
+            //disable related post option in select list that has same name as current post
+            foreach (var optionItem in relatedPosts)
+            {
+                if (optionItem.Text == post.Title)
+                {
+					optionItem.Disabled = true;
+                }
+            }
 
-            var query = postTitles.GroupJoin(relatedIds,
-                                                post => post.Id,
-                                                related => related,
-                                                (post, related) =>
-                                                new
-                                                {
-                                                    Title = post.Title,
-                                                    Id = related
-                                                })
-                .SelectMany(x => x.Id.DefaultIfEmpty(),
-                            (x, Id) => new
-                            {
-                                x.Title,
-                                Id
-                            })
-                .Where(r => r.Id is not null);
+			var postEditVM = new PostEditViewModel()
+            {
+				Post = post,
+                drpPosts = relatedPosts,
+                PostsIds = postsIds
+			};
 
-            ViewData["PostValues"] = string.Join(",", query.Select(r => r.Title));
-          
-
-            return View(post);
+			return View(postEditVM);
         }
 
         // POST: Posts/Edit/5
@@ -377,41 +345,41 @@ namespace CEBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus")] Post post, IFormFile? newImage, List<string> tagValues, List<string> postValues)
+        public async Task<IActionResult> Edit(int id, PostEditViewModel model, IFormFile? newImage, List<string> tagValues)
         {
-            if (id != post.Id)
+            if (id != model.Post.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (id > 0)
             {
                 try
                 {
                     var newPost = await _context.Posts
                         .Include(p => p.Tags)
                         .Include(p => p.RelatedPosts)
-                        .FirstOrDefaultAsync(p => p.Id == post.Id);
+                        .FirstOrDefaultAsync(p => p.Id == model.Post.Id);
 
                     newPost.Updated = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
-                    newPost.Title = post.Title;
-                    newPost.Abstract = post.Abstract;
-                    newPost.Content = post.Content;
-                    newPost.ReadyStatus = post.ReadyStatus;
+                    newPost.Title = model.Post.Title;
+                    newPost.Abstract = model.Post.Abstract;
+                    newPost.Content = model.Post.Content;
+                    newPost.ReadyStatus = model.Post.ReadyStatus;
 
-                    var newSlug = _slugService.UrlFriendly(post.Title);
+                    var newSlug = _slugService.UrlFriendly(model.Post.Title);
                     if (newSlug != newPost.Slug)
                     {
                         if (_slugService.IsUnique(newSlug))
                         {
-                            newPost.Title = post.Title;
+                            newPost.Title = model.Post.Title;
                             newPost.Slug = newSlug;
                         }
                         else
                         {
                             ModelState.AddModelError("Title", "This Title cannot be used as it results in a duplicate slug");
-							ViewData["TagValues"] = string.Join(",", post.Tags.Select(t => t.Text));
-							return View(post);
+							ViewData["TagValues"] = string.Join(",", model.Post.Tags.Select(t => t.Text));
+							return View(model.Post);
                         }
                     }
 
@@ -429,35 +397,34 @@ namespace CEBlog.Controllers
                     {
                         _context.Add(new Tag()
                         {
-                            PostId = post.Id,
+                            PostId = model.Post.Id,
                             AuthorId = newPost.AuthorId,
                             Text = tagText
                         });
                     }
 
                     //Remove all related Posts previously associated with this Post
-                    newPost.RelatedPosts.Clear(); 
+                    List<Related> relatedPosts = new List<Related>();
+                    newPost.RelatedPosts.ToList().ForEach(result => relatedPosts.Add(result));
+                    _context.Relateds.RemoveRange(relatedPosts);
+                    await _context.SaveChangesAsync();
 
                     //Add in the new related Posts from the Edit form
-                    foreach (var postText in postValues)
+                    if(model.PostsIds.Count() > 0)
                     {
-                        var postArticle = await _context.Posts
-                                .FirstOrDefaultAsync(p => p.Title.ToLower() == postText.ToLower());
+						relatedPosts = new List<Related>();
 
-                        if (postArticle is null) { continue; }
-
-                        var relatedPost = new Related()
+                        foreach (var postId in model.PostsIds)
                         {
-                            ArticleId = postArticle.Id 
-                        };
-                        newPost.RelatedPosts.Add(relatedPost);
-                    }
-
-                    await _context.SaveChangesAsync();
+                            relatedPosts.Add(new Related { PostId = id, ArticleId = postId });
+                        }
+                        newPost.RelatedPosts = relatedPosts;
+					}
+					await _context.SaveChangesAsync(); 
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PostExists(post.Id))
+                    if (!PostExists(model.Post.Id))
                     {
                         return NotFound();
                     }
@@ -472,10 +439,8 @@ namespace CEBlog.Controllers
                 .Include(p => p.Tags)
                 .Include(p => p.RelatedPosts)
                 .Include(p => p.Comments));
-            }
-            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", post.AuthorId);
-            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description", post.BlogId);
-            return View(post);
+            } 
+            return View(model.Post);
         }
 
         // GET: Posts/Delete/5

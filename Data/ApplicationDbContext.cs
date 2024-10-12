@@ -16,6 +16,6 @@ namespace CEBlog.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Related> Relateds { get; set; }
-        public DbSet<CEBlog.Models.Reply>? Reply { get; set; }
+        public DbSet<Reply>? Reply { get; set; }
     }
 }
