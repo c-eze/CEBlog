@@ -3,11 +3,12 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using CEBlog.ViewModels;
+using CEBlog.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace CEBlog.Services
 {
-	public class EmailService : IBlogEmailSender
+    public class EmailService : IBlogEmailSender
 	{
 		private readonly MailSettings _mailSettings;
 
@@ -18,9 +19,11 @@ namespace CEBlog.Services
 
 		public async Task SendContactEmailAsync(string emailFrom, string firstName, string lastName, string htmlMessage)
 		{
-			var email = new MimeMessage();
-			email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-			email.To.Add(MailboxAddress.Parse(_mailSettings.Mail));
+            var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email");
+
+            var email = new MimeMessage();
+			email.Sender = MailboxAddress.Parse(_mailSettings.Email);
+			email.To.Add(MailboxAddress.Parse(_mailSettings.Email));
 			email.Subject = "New Entry: Contact Form";
 
 			var builder = new BodyBuilder();
@@ -28,20 +31,34 @@ namespace CEBlog.Services
 
 			email.Body = builder.ToMessageBody();
 
-			using var smtp = new SmtpClient();
-			smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-			smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+			using var smtpClient = new SmtpClient();
 
-			await smtp.SendAsync(email);
+            try
+            {
+                var host = _mailSettings.MailHost ?? Environment.GetEnvironmentVariable("MailHost");
+                var port = _mailSettings.MailPort != 0 ? _mailSettings.MailPort : int.Parse(Environment.GetEnvironmentVariable("MailPort")!);
+                var password = _mailSettings.MailPassword ?? Environment.GetEnvironmentVariable("MailPassword");
 
-			smtp.Disconnect(true);
+                await smtpClient.ConnectAsync(host, port, SecureSocketOptions.StartTls);
+                await smtpClient.AuthenticateAsync(emailSender, password);
+
+                await smtpClient.SendAsync(email);
+                await smtpClient.DisconnectAsync(true);
+            }
+            catch (Exception ex)
+            {
+                var error = ex.Message;
+                throw;
+            }
 		}
 
         public async Task SendSubscribeEmailAsync(string emailFrom)
         {
+            var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email");
+
             var email = new MimeMessage();
-            email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-            email.To.Add(MailboxAddress.Parse(_mailSettings.Mail));
+            email.Sender = MailboxAddress.Parse(_mailSettings.Email);
+            email.To.Add(MailboxAddress.Parse(_mailSettings.Email));
             email.Subject = "New Subscriber";
 
             var builder = new BodyBuilder();
@@ -49,19 +66,33 @@ namespace CEBlog.Services
 
             email.Body = builder.ToMessageBody();
 
-            using var smtp = new SmtpClient();
-            smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-            smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+            using var smtpClient = new SmtpClient();
 
-            await smtp.SendAsync(email);
+            try
+            {
+                var host = _mailSettings.MailHost ?? Environment.GetEnvironmentVariable("MailHost");
+                var port = _mailSettings.MailPort != 0 ? _mailSettings.MailPort : int.Parse(Environment.GetEnvironmentVariable("MailPort")!);
+                var password = _mailSettings.MailPassword ?? Environment.GetEnvironmentVariable("MailPassword");
 
-            smtp.Disconnect(true);
+                await smtpClient.ConnectAsync(host, port, SecureSocketOptions.StartTls);
+                await smtpClient.AuthenticateAsync(emailSender, password);
+
+                await smtpClient.SendAsync(email);
+                await smtpClient.DisconnectAsync(true);
+            }
+            catch (Exception ex)
+            {
+                var error = ex.Message;
+                throw;
+            }
         }
 
         public async Task SendEmailAsync(string emailTo, string subject, string htmlMessage)
-		{
-			var email = new MimeMessage();
-			email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
+        {
+            var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email");
+
+            var email = new MimeMessage();
+			email.Sender = MailboxAddress.Parse(_mailSettings.Email);
 			email.To.Add(MailboxAddress.Parse(emailTo));
 			email.Subject= subject;
 
@@ -72,13 +103,25 @@ namespace CEBlog.Services
 
 			email.Body = builder.ToMessageBody();
 
-			using var smtp = new SmtpClient();
-			smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-			smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+			using var smtpClient = new SmtpClient();
 
-			await smtp.SendAsync(email);
+            try
+            {
+                var host = _mailSettings.MailHost ?? Environment.GetEnvironmentVariable("MailHost");
+                var port = _mailSettings.MailPort != 0 ? _mailSettings.MailPort : int.Parse(Environment.GetEnvironmentVariable("MailPort")!);
+                var password = _mailSettings.MailPassword ?? Environment.GetEnvironmentVariable("MailPassword");
 
-			smtp.Disconnect(true);
-		}
+                await smtpClient.ConnectAsync(host, port, SecureSocketOptions.StartTls);
+                await smtpClient.AuthenticateAsync(emailSender, password);
+
+                await smtpClient.SendAsync(email);
+                await smtpClient.DisconnectAsync(true);
+            }
+            catch (Exception ex)
+            {
+                var error = ex.Message;
+                throw;
+            }
+        }
 	}
 }

@@ -4,7 +4,6 @@ using CEBlog.Data;
 using CEBlog.Helpers;
 using CEBlog.Models;
 using CEBlog.Services;
-using CEBlog.ViewModels;
 using ContactPro.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
