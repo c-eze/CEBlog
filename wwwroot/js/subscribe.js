@@ -3,6 +3,10 @@
         submitSubcriber("#mc-email");
     });
 
+    $("#btnSubscribe2").on("click", function () {
+        submitSubcriber("#mc-email2");
+    });
+
     $("#list-subscribe").on("click", function(){
         submitSubcriber("#list-email");
     });

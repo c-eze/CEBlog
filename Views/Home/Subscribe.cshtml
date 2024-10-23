@@ -10,10 +10,10 @@
                     <div class="subscribe-wrap">
                         <h2>Subscribe</h2>
                         <h3>Sign up to our monthly newsletter and receive articles</h3>
-                        <form asp-action="Subscribe" asp-controller="Home" method="post" class="subscribe-form"> 
+                        <form class="subscribe-form"> 
                             <div class="mc-fields">
-                                <input asp-for="Email" id="mc_email" class="form-control" type="email" placeholder="Your Email" required data-validation-required-message="Please enter your email address.">
-                                <button type="submit" class="default-btn text-anim" data-text="Subscribe">Subscribe</button>                            
+                                <input id="mc_email2" class="form-control" type="email" placeholder="Your Email" required data-validation-required-message="Please enter your email address.">
+                                <button id="btnSubscribe2" type="submit" formaction="javascript:void(0)" class="default-btn text-anim" data-text="Subscribe">Subscribe</button>
                             </div>
                             <div class="clearfix"></div>
                             <div id="mc-form-messages" class="alert" role="alert"></div>
@@ -26,3 +26,7 @@
     </div>
 </section>
 <!--/.subscribe-section-->
+
+@section Scripts {
+    <script src="~/js/subscribe.js" type="text/javascript"></script>
+}
