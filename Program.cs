@@ -5,13 +5,15 @@ using CEBlog.Helpers;
 using CEBlog.Models;
 using CEBlog.Services;
 using CEBlog.ViewModels;
+using ContactPro.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 //var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 
 // Add services to the container.
 //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-var connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"];
+//var connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"];
+var connectionString = ConnectionHelper.GetConnectionString(builder.Configuration);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
