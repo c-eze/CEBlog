@@ -8,6 +8,7 @@ using CEBlog.ViewModels;
 using X.PagedList.Extensions;
 using CEBlog.Enums;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CEBlog.Controllers
 {
@@ -59,32 +60,27 @@ namespace CEBlog.Controllers
             await _emailSender.SendContactEmailAsync(model.Email, model.FirstName, model.LastName, model.Message);
             return RedirectToAction("Index");
         }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<JsonResult> PostSubscriber (IFormCollection formCollection)
+        		
+		public IActionResult GetSubscriber(SubscribeTo subscriber)
         {
-            SubscribeTo subscriber = new SubscribeTo();
-            subscriber.Email = formCollection["email"];
-            JsonResponseViewModel model = new JsonResponseViewModel();
-            if (subscriber is not null)
-            {
-                model.ResponseCode = 0;
-                model.ResponseMessage = JsonConvert.SerializeObject(subscriber);
+			JsonResponseViewModel model = new JsonResponseViewModel();
+			if (subscriber.Email is not null)
+			{
+				model.ResponseCode = 0; 
 
-				await _emailSender.SendSubscribeEmailAsync(subscriber.Email);
+				_emailSender.SendSubscribeEmailAsync(subscriber.Email);
 
 				string subject = "Thanks for signing up!";
 				string message = $"<b>Thanks for signing up!</b><br/><p>Welcome! You are now subscribed to Chikere.dev blog. We will be passing along updates to the blog and much more.</p><br/><p>The Chikere.dev Team</p>";
-				await _emailSender.SendEmailAsync(subscriber.Email, subject, message);
+				_emailSender.SendEmailAsync(subscriber.Email, subject, message);
 			}
-            else
-            {
-                model.ResponseCode = 1;
-                model.ResponseMessage = "No record available";
-            }
-            return Json(model);
-        }
+			else
+			{
+				model.ResponseCode = 1;
+				model.ResponseMessage = "No email available";
+			}
+			return Json(model);
+		}
 
         public IActionResult Subscribe()
         {

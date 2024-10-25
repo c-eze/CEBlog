@@ -1,7 +1,6 @@
 const SENSITIVITY = 10;
 
-//document.addEventListener('DOMContentLoaded', () => {
-$(document).ready(function () {
+$(function () {
     const modalEle = document.getElementById('subscribeModal');
     var subscribeModal = new bootstrap.Modal(modalEle);
     const subscribeBtn = document.getElementById('modalBtn');
@@ -27,37 +26,36 @@ $(document).ready(function () {
     };
 
     document.addEventListener('mouseleave', handleMouseLeave);
-    subscribeBtn.addEventListener("click", function () {
-        addSubscriber("#modal-email");
-        closeBtn.click();
+    subscribeBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        addSubscriber();
         event.stopImmediatePropagation();
     });
 });
 
-
-
-const addSubscriber = (element) => {
-    var formData = new FormData();
-    formData.append("email", $(element).val());
-
+const addSubscriber = () => {
+    var emailAddress = document.getElementById("modal-email").value;
     $.ajax({
         type: 'POST',
-        url: '/Home/PostSubscriber',
-        contentType: false,
-        processData: false,
-        cache: false,
-        data: formData,
-        success: successCallback,
-        error: function () { }
+        url: '/Home/GetSubscriber',
+        data: { Email: emailAddress },
+        dataType: 'json',
+        success: function (response) {
+            if (response.responseCode == 0) {
+                $("#modal-email").val("");
+                Swal.fire({
+                    icon: "success",
+                    position: "top-end",
+                    showConfirmButton: false,
+                    title: "Thank you for subscribing!",
+                    timer: 1500
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log("Subscriber email failed.");
+            console.log(status);
+            console.log(error);
+        }
     });
 };
-
-function successCallback() {
-    Swal.fire({
-        icon: "success",
-        position: "top-end",
-        showConfirmButton: false,
-        title: "Thank you for subscribing!",
-        timer: 2500
-    });
-}

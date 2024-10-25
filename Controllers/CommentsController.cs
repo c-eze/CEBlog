@@ -80,8 +80,6 @@ namespace CEBlog.Controllers
 
                 return RedirectToAction("Details", "Posts", new { slug }, "commentSection");
             }
-
-
             return View(comment);
         }
 

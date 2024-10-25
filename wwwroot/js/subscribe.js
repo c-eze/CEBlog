@@ -1,50 +1,54 @@
-﻿$(document).ready(function(){
-    $("#btnSubscribe").on("click", function(){
-        submitSubcriber("#mc-email");
-    });
+﻿$(function () {
+	$("#btnSubscribe").on("click", function () {
+		var emailAddress = $("#mc-email").val();
+		$.ajax({
+			type: 'POST',
+			url: '/Home/GetSubscriber', /*'@Url.Action("GetSubscriber", "Home")',*/
+			data: { Email: emailAddress },
+			dataType: 'json',
+			success: function (response) {
+				console.log(response);
+				if (response.responseCode == 0) {
+					$("#mc-email").val("");
+					Swal.fire({
+						icon: "success",
+						position: "top-end",
+						showConfirmButton: false,
+						title: "Thank you for subscribing!",
+						timer: 1500
+					});
+				}
+			},
+			error: function (xhr, status, error) {
+				console.log("Subscriber email failed.");
+			}
+		});
+	});
 
-    $("#btnSubscribe2").on("click", function () {
-        submitSubcriber("#mc-email2");
-    });
+	$("#list-subscribe").on("click", function () {
+		var emailAddress = $("#list-email").val();
+		$.ajax({
+			type: 'POST',
+			url: '/Home/GetSubscriber', //'@Url.Action("GetSubscriber", "Home")',
+			data: { Email: emailAddress },
+			dataType: 'json',
+			success: function (response) {
+				console.log(response);
+				if (response.responseCode == 0) {
+					$("#list-email").val("");
+					Swal.fire({
+						icon: "success",
+						position: "top-end",
+						showConfirmButton: false,
+						title: "Thank you for subscribing!",
+						timer: 1500
+					});
+				}
+			},
+			error: function (xhr, status, error) {
+				console.log("Subscriber email failed.");
+			}
+		});
+	});
 
-    $("#list-subscribe").on("click", function(){
-        submitSubcriber("#list-email");
-    });
-
-    $("#modalBtn").on("click", function () {
-        submitSubcriber("#modal-email");
-    });
 });
-
-function submitSubcriber(element) {
-    var formData = new FormData();
-    formData.append("email", $(element).val());
-    $.ajax({
-        type: 'POST',
-        url: '/Home/PostSubscriber',
-        contentType: false,
-        processData: false,
-        cache: false,
-        data: formData,
-        success: successCallback(element),
-        error: errorCallback
-    });
-}
-
-function resetForm(element) {
-    $(element).val("");
-}
-
-function successCallback(element) {
-    resetForm(element);
-    Swal.fire({
-        icon: "success",
-        position: "top-end",
-        showConfirmButton: false,
-        title: "Thank you for subscribing!",
-        timer: 1500 
-    });
-}
-
-function errorCallback() {
-}
