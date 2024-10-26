@@ -51,14 +51,23 @@ namespace CEBlog.Controllers
 			return View();
 		}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Contact(ContactMe model)
+       
+        public IActionResult GetContact(ContactMe contactMe)
         {
-            //This is where we will be emailing...
-            model.Message = $"{model.Message} <hr/> Phone: {model.Phone}";
-            await _emailSender.SendContactEmailAsync(model.Email, model.FirstName, model.LastName, model.Message);
-            return RedirectToAction("Index");
+            JsonResponseViewModel model = new JsonResponseViewModel();
+            if (contactMe.Email is not null && contactMe.Message is not null)
+            {
+                model.ResponseCode = 0;
+
+                //This is where we will be emailing... 
+                _emailSender.SendContactEmailAsync(contactMe.Email, contactMe.Message);
+            }
+            else
+            {
+                model.ResponseCode = 1;
+                model.ResponseMessage = "No email available";
+            }
+            return Json(model); 
         }
         		
 		public IActionResult GetSubscriber(SubscribeTo subscriber)
@@ -85,19 +94,6 @@ namespace CEBlog.Controllers
         public IActionResult Subscribe()
         {
             return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Subscribe([Bind("Email")] SubscribeTo model)
-        {
-            //This is where we will be emailing...
-            await _emailSender.SendSubscribeEmailAsync(model.Email);
-
-            string subject = "Thanks for signing up!";
-            string message = $"<b>Thanks for signing up!</b><br/><p>Welcome! You are now subscribed to Chikere.dev blog. We will be passing along updates to the blog and much more.</p><br/><p>The Chikere.dev Team</p>";
-            await _emailSender.SendEmailAsync(model.Email, subject, message);
-            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Terms()

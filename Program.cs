@@ -3,8 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using CEBlog.Data;
 using CEBlog.Helpers;
 using CEBlog.Models;
-using CEBlog.Services;
-using ContactPro.Helpers;
+using CEBlog.Services; 
 
 var builder = WebApplication.CreateBuilder(args);
 //var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");

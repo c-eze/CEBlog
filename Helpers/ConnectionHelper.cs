@@ -1,6 +1,6 @@
 ﻿using Npgsql;
 
-namespace ContactPro.Helpers
+namespace CEBlog.Helpers
 {
     public static class ConnectionHelper
     {

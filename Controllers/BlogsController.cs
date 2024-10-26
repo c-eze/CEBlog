@@ -13,7 +13,9 @@ using CEBlog.Services;
 
 namespace CEBlog.Controllers
 {
-    public class BlogsController : Controller
+
+	[Authorize(Roles = "Administrator")]
+	public class BlogsController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IImageService _imageService;

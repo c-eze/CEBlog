@@ -4,7 +4,7 @@ namespace CEBlog.Services
 {
 	public interface IBlogEmailSender : IEmailSender
 	{
-		Task SendContactEmailAsync(string emailFrom, string name, string subject, string htmlMessage);
+		Task SendContactEmailAsync(string emailFrom, string htmlMessage);
         Task SendSubscribeEmailAsync(string emailFrom);
     }
 }

@@ -17,7 +17,7 @@ namespace CEBlog.Services
 			_mailSettings = mailSettings.Value;
 		}
 
-		public async Task SendContactEmailAsync(string emailFrom, string firstName, string lastName, string htmlMessage)
+		public async Task SendContactEmailAsync(string emailFrom, string htmlMessage)
 		{
             var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email");
 
@@ -27,7 +27,7 @@ namespace CEBlog.Services
 			email.Subject = "New Entry: Contact Form";
 
 			var builder = new BodyBuilder();
-			builder.HtmlBody = $"<b>{firstName} {lastName}</b> has sent you an email and can be reached at: <b>{emailFrom}</b><br/><br/>{htmlMessage}";
+			builder.HtmlBody = $"An email has been sent from: <b>{emailFrom}</b><br/><br/>{htmlMessage}";
 
 			email.Body = builder.ToMessageBody();
 

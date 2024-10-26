@@ -16,9 +16,11 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Hosting;
 using MailKit.Search;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CEBlog.Controllers
 {
+    [Authorize(Roles = "Administrator, Moderator, GuestAuthor")]
     public class PostsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -55,7 +57,8 @@ namespace CEBlog.Controllers
             return View(await posts.ToListAsync());
 		}
 
-        public IActionResult ArchiveIndex(int? page, string? publishDate)
+		[AllowAnonymous]
+		public IActionResult ArchiveIndex(int? page, string? publishDate)
         {          
             var pageNumber = page ?? 1;
             var pageSize = 6;
@@ -68,7 +71,8 @@ namespace CEBlog.Controllers
             return View(posts.ToPagedList(pageNumber, pageSize));
         }
 
-        public async Task<IActionResult> AuthorIndex(int? page, string? authorId)
+		[AllowAnonymous]
+		public async Task<IActionResult> AuthorIndex(int? page, string? authorId)
         {
             ViewData["AuthorDesc"] = "Meet Chikere, a developer in Alabama who specializes in programming full stack web applications and software in ASP.NET and C#.";
 
@@ -82,7 +86,8 @@ namespace CEBlog.Controllers
             return View(posts.ToPagedList(pageNumber, pageSize));
         }
 
-        public async Task<IActionResult> TagIndex(int? page, string tagName)
+		[AllowAnonymous]
+		public async Task<IActionResult> TagIndex(int? page, string tagName)
         {
             ViewData["TagName"] = tagName;
 
@@ -96,7 +101,8 @@ namespace CEBlog.Controllers
             return View(posts.ToPagedList(pageNumber, pageSize));
         }
 
-        public async Task<IActionResult> CategoryIndex(int? page, string categoryName)
+		[AllowAnonymous]
+		public async Task<IActionResult> CategoryIndex(int? page, string categoryName)
         {
             ViewData["CategoryName"] = categoryName;
 
@@ -116,6 +122,7 @@ namespace CEBlog.Controllers
             return View(posts.ToPagedList(pageNumber, pageSize));
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> SearchIndex(int? page, string searchTerm)
         {
             ViewData["SearchTerm"] = searchTerm;
@@ -131,6 +138,7 @@ namespace CEBlog.Controllers
         }
 
 		//BlogPostIndex
+		[AllowAnonymous]
 		public async Task<IActionResult> BlogPostIndex(int? id, int? page)
 		{
 			if (id is null)
@@ -150,8 +158,9 @@ namespace CEBlog.Controllers
 
 		}
 
-        // GET: Posts/Details/5
-        public async Task<IActionResult> Details(string slug)
+		// GET: Posts/Details/5
+		[AllowAnonymous]
+		public async Task<IActionResult> Details(string slug)
         {
             ViewData["Title"] = "Post Details";
             if (string.IsNullOrEmpty(slug))
