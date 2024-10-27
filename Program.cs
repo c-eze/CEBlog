@@ -32,8 +32,8 @@ services.AddIdentity<BlogUser, IdentityRole>(options => options.SignIn.RequireCo
 
 services.AddAuthentication().AddTwitter(twitterOptions =>
 {
-    twitterOptions.ConsumerKey = configuration["Authentication:Twitter:ConsumerAPIKey"];
-    twitterOptions.ConsumerSecret = configuration["Authentication:Twitter:ConsumerSecret"];
+    twitterOptions.ConsumerKey = configuration["Authentication:Twitter:ConsumerAPIKey"] ?? Environment.GetEnvironmentVariable("ConsumerAPIKey");
+    twitterOptions.ConsumerSecret = configuration["Authentication:Twitter:ConsumerSecret"] ?? Environment.GetEnvironmentVariable("ConsumerSecret");
 });
 
 services.AddControllersWithViews();
