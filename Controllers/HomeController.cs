@@ -50,8 +50,7 @@ namespace CEBlog.Controllers
 		{
 			return View();
 		}
-
-       
+                
         public IActionResult GetContact(ContactMe contactMe)
         {
             JsonResponseViewModel model = new JsonResponseViewModel();
@@ -69,8 +68,8 @@ namespace CEBlog.Controllers
             }
             return Json(model); 
         }
-        		
-		public IActionResult GetSubscriber(SubscribeTo subscriber)
+
+        public IActionResult GetSubscriber(SubscribeTo subscriber)
         {
 			JsonResponseViewModel model = new JsonResponseViewModel();
 			if (subscriber.Email is not null)

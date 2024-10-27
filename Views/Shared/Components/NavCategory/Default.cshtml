@@ -1,0 +1,10 @@
+﻿@using CEBlog.Models
+
+@model IEnumerable<Blog>
+
+<ul>
+    @foreach (var blog in Model)
+    {
+        <li><a asp-action="CategoryIndex" asp-controller="Posts" asp-route-categoryname="@blog.Name">@blog.Name</a></li>
+    }
+</ul>

@@ -6,51 +6,59 @@ using CEBlog.Models;
 using CEBlog.Services; 
 
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+var configuration = builder.Configuration;
 //var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 
 // Add services to the container.
 //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 //var connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"];
-var connectionString = ConnectionHelper.GetConnectionString(builder.Configuration);
+var connectionString = ConnectionHelper.GetConnectionString(configuration);
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 //builder.Services.AddDefaultIdentity<BlogUser>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+services.AddDatabaseDeveloperPageExceptionFilter();
 
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddIdentity<BlogUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+services.AddIdentity<BlogUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddDefaultUI()
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddControllersWithViews();
+services.AddAuthentication().AddTwitter(twitterOptions =>
+{
+    twitterOptions.ConsumerKey = configuration["Authentication:Twitter:ConsumerAPIKey"];
+    twitterOptions.ConsumerSecret = configuration["Authentication:Twitter:ConsumerSecret"];
+});
 
-builder.Services.AddRazorPages();
+services.AddControllersWithViews();
+
+services.AddRazorPages();
 
 //register custom services
-builder.Services.AddScoped<DataService>();
-builder.Services.AddScoped<BlogSearchService>();
+services.AddScoped<DataService>();
+services.AddScoped<BlogSearchService>();
 
 //register a preconfigured instance of the MailSettings class
-builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
-builder.Services.AddScoped<IBlogEmailSender, EmailService>();
+services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
+services.AddScoped<IBlogEmailSender, EmailService>();
 
 //Register our Image Service
-builder.Services.AddScoped<IImageService, BasicImageService>();
+services.AddScoped<IImageService, BasicImageService>();
 
 //Register the Slug Service
-builder.Services.AddScoped<ISlugService, BasicSlugService>();
+services.AddScoped<ISlugService, BasicSlugService>();
 
 //Register the Slug Service
-builder.Services.AddScoped<INavigationService, PostNavigationService>();
+services.AddScoped<INavigationService, PostNavigationService>();
 
 //Register Memory Cache
-builder.Services.AddMemoryCache();
+services.AddMemoryCache();
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();
