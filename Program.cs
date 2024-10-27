@@ -12,8 +12,8 @@ var configuration = builder.Configuration;
 
 // Add services to the container.
 //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-var connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"];
-//var connectionString = ConnectionHelper.GetConnectionString(configuration);
+//var connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"];
+var connectionString = ConnectionHelper.GetConnectionString(configuration);
 
 services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
