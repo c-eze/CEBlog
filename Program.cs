@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using CEBlog.Data;
 using CEBlog.Helpers;
 using CEBlog.Models;
-using CEBlog.Services; 
+using CEBlog.Services;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -60,6 +62,37 @@ services.AddScoped<INavigationService, PostNavigationService>();
 //Register Memory Cache
 services.AddMemoryCache();
 
+// Add API configs
+services.AddSwaggerGen(options =>
+{
+	options.SwaggerDoc("v1", new OpenApiInfo
+	{
+		Title = "Blog",
+		Version = "v1",
+		Description = "Chikere Blog",
+		Contact = new OpenApiContact
+		{
+			Name = "Chikere",
+			Url = new Uri("https://chikere.dev/")
+		}
+	});
+
+	var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+	options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
+});
+
+services.AddCors(obj =>
+{
+	obj.AddPolicy("DefaultPolicy",
+		builder => builder.AllowAnyOrigin()
+						  .AllowAnyMethod()
+						  .AllowAnyHeader());
+});
+
+services.AddMvc();
+// END API CONFIGS
+
+
 var app = builder.Build();
 var scope = app.Services.CreateScope();
 
@@ -85,6 +118,19 @@ else
 }
 
 app.UseStatusCodePagesWithRedirects("/StatusCodeError/{0}");
+
+// API
+app.UseCors("DefaultPolicy");
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+	c.SwaggerEndpoint("/swagger/v1/swagger.json", "PublicAPI, v1");
+	c.InjectStylesheet("/css/swagger.css");
+	c.InjectJavascript("/js/swagger.js");
+
+	c.DocumentTitle = "Blog";
+});
+// end API
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
