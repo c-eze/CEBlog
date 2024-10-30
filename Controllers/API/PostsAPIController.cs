@@ -33,8 +33,8 @@ namespace CEBlog.Controllers.API
 
             IEnumerable<Post>? result = await _context.Posts
 				.Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
-				.Take(count.Value)
 				.OrderByDescending(p => p.Created)
+				.Take(count.Value)
 				.ToListAsync();
 
             //IEnumerable<Post>? result = await _context.Posts
