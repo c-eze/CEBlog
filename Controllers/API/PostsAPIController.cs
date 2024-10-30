@@ -32,8 +32,8 @@ namespace CEBlog.Controllers.API
 			}
 
             IEnumerable<Post>? result = await _context.Posts
-				//.Include(p => p.Tags)
-				.Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
+                .Include(p => p.Tags)
+                .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
 				.OrderByDescending(p => p.Created)
 				.Take(count.Value)
 				.ToListAsync();
