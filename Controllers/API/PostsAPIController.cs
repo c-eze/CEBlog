@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CEBlog.Data;
 using CEBlog.Models;
+using CEBlog.Enums;
 
 namespace CEBlog.Controllers.API
 {
@@ -30,7 +31,12 @@ namespace CEBlog.Controllers.API
 				return NotFound();
 			}
 
-            IEnumerable<Post>? result = await _context.Posts.Take(count.Value).ToListAsync();
+            IEnumerable<Post>? result = await _context.Posts
+				.Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
+				.Take(count.Value)
+				.OrderByDescending(p => p.Created)
+				.ToListAsync();
+
             //IEnumerable<Post>? result = await _context.Posts
             //						.Where(p => p.Id == 5 || p.Id == 8 || p.Id == 7)
             //						.OrderByDescending(p => p.Title)
