@@ -45,7 +45,7 @@ namespace CEBlog.Controllers.API
 
             if (result.Any())
 			{
-				return Ok(result);
+				return result;
 			}
 
 			return BadRequest();
