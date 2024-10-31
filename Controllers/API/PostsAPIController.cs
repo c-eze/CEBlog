@@ -31,7 +31,7 @@ namespace CEBlog.Controllers.API
 				return NotFound();
 			}
 
-            var result = await _context.Posts//.Include(p => p.Tags)
+            var result = await _context.Posts.Include(p => p.Tags)
                 .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
 				.OrderByDescending(p => p.Created)
 				.Take(count.Value)
