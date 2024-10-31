@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CEBlog.Data;
 using CEBlog.Models;
 using CEBlog.Enums;
+using CEBlog.Models.DTOs;
 
 namespace CEBlog.Controllers.API
 {
@@ -31,10 +32,21 @@ namespace CEBlog.Controllers.API
 				return NotFound();
 			}
 
-            var result = await _context.Posts.Include(p => p.Tags)
+            var posts = await _context.Posts.Include(p => p.Tags)
                 .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
-				.OrderByDescending(p => p.Created)
-				.Take(count.Value)
+                .OrderByDescending(p => p.Created)
+                .Take(count.Value)
+                .Select(p => new PostDTO
+                {
+                    Title = p.Title,
+                    Updated = p.Updated,
+                    Slug = p.Slug,
+                    ImageData = p.ImageData,
+                    Tags = p.Tags.Select(t => new TagDTO
+                    {
+                        Text = t.Text
+                    })
+				})
 				.ToListAsync();
 
             //IEnumerable<Post>? result = await _context.Posts
@@ -43,9 +55,9 @@ namespace CEBlog.Controllers.API
             //						.ToListAsync();
             // change above line to include specific posts
 
-            if (result.Any())
+            if (posts.Any())
 			{
-				return result;
+				return Ok(posts);
 			}
 
 			return BadRequest();
