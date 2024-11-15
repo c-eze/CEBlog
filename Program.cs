@@ -18,7 +18,8 @@ var configuration = builder.Configuration;
 var connectionString = ConnectionHelper.GetConnectionString(configuration);
 
 services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(connectionString,
+    o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
 
 //builder.Services.AddDefaultIdentity<BlogUser>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<ApplicationDbContext>();
